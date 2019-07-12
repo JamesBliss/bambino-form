@@ -43,6 +43,7 @@ const Form = ({
   async function handleFieldValidation({ name, value }) {
     try {
       if (schema) {
+        console.log({ schema }, { name }, { value });
         await reach(await reach(schema, name).validate(value));
       }
       const { [name]: remove, ...remaining } = errors;
@@ -83,6 +84,8 @@ const Form = ({
     } catch (err) {
       const validationErrors = {};
 
+
+      console.log(err);
       if (!err.inner) {
         throw err;
       }

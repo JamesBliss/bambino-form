@@ -28,15 +28,13 @@ const schema = object().shape({
 const testSchema = object().shape({
   ID: string().required('required'),
   translations: lazy(obj => object(mapValues(obj, (v, k) => {
-    console.log(obj, v, k);
-    debugger;
     return string().required();
   })))
 });
 
 const testDate = {
   ID: '5',
-  translataions: {
+  translations: {
     'en': 'hello',
     'fr': ''
   }
@@ -67,8 +65,8 @@ storiesOf('Form', module)
             label='ID'
             name='ID'
           />
-          <Form.Scope path='translataions'>
-            { Object.keys(testDate.translataions).map((key, index) => (
+          <Form.Scope path='translations'>
+            { Object.keys(testDate.translations).map((key, index) => (
               <React.Fragment>
                 <h1>{ key }</h1>
                 <Form.Input
