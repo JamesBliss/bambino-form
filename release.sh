@@ -1,5 +1,5 @@
 
-read -r -p "Run full package release? [y/N] " response
+read -r -p "Run major, minor, patch or package release? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
 
   echo "What type of update is this: major, minor, patch?"
