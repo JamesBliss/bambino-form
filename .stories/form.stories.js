@@ -59,7 +59,7 @@ storiesOf('Form', module)
   })
 
   // stories
-  .add('Default', () => {
+  .add('key/value validation', () => {
     const FormWrapper = () => {
       const [fields, setFields] = React.useState({});
 
