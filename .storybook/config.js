@@ -3,8 +3,8 @@ import { configure, addDecorator, addParameters } from '@storybook/react';
 addParameters({
   options: {
     theme: {
-      brandTitle: 'bambino-icons',
-      brandUrl: 'https://jamesbliss.github.io/bambino-icons'
+      brandTitle: 'bambino-form',
+      brandUrl: 'https://jamesbliss.github.io/bambino-form'
     },
     hierarchyRootSeparator: /\|/,
   }

@@ -1,7 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components'
-import { array, of, object, string } from 'yup';
+import { object, lazy, array, of, string } from 'yup';
+const mapValues = require('lodash/mapValues')
+
 
 // components //
 import * as Form from '../src'
@@ -22,6 +24,24 @@ const schema = object().shape({
   }))
 });
 
+
+const testSchema = object().shape({
+  ID: string().required('required'),
+  translations: lazy(obj => object(mapValues(obj, (v, k) => {
+    console.log(obj, v, k);
+    debugger;
+    return string().required();
+  })))
+});
+
+const testDate = {
+  ID: '5',
+  translataions: {
+    'en': 'hello',
+    'fr': ''
+  }
+}
+
 // story //
 storiesOf('Form', module)
 
@@ -34,6 +54,39 @@ storiesOf('Form', module)
 
   // stories
   .add('Default', () => {
+    const FormWrapper = () => {
+      const [fields, setFields] = React.useState({});
+
+      return (
+        <Form.Form
+          schema={ testSchema }
+          initialData={ testDate}
+          onSubmit={(data) => setFields(data)}
+        >
+          <Form.Input
+            label='ID'
+            name='ID'
+          />
+          <Form.Scope path='translataions'>
+            { Object.keys(testDate.translataions).map((key, index) => (
+              <React.Fragment>
+                <h1>{ key }</h1>
+                <Form.Input
+                  label='locale'
+                  name={ key }
+                />
+              </React.Fragment>
+            )) }
+          </Form.Scope>
+          <hr />
+          <button type="submit">Save</button>
+          <pre>{ JSON.stringify(fields, null, 2) }</pre>
+        </Form.Form>
+      )
+    }
+    return <FormWrapper />;
+  })
+  .add('Default too', () => {
     const FormWrapper = () => {
       const [fields, setFields] = React.useState({});
 
