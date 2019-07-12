@@ -27,9 +27,7 @@ const schema = object().shape({
 
 const testSchema = object().shape({
   ID: string().required('required'),
-  translations: lazy(obj => object(mapValues(obj, (v, k) => {
-    return string().required();
-  })))
+  translations: lazy(obj => object(mapValues(obj, () => string().required())))
 });
 
 const testDate = {
@@ -39,6 +37,16 @@ const testDate = {
     'fr': ''
   }
 }
+
+// const testDate = {
+//   ID: '5',
+//   translations: [
+//     {
+//       'locale': 'en',
+//       'name': 'fr'
+//     }
+//   ]
+// }
 
 // story //
 storiesOf('Form', module)
