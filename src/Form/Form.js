@@ -83,8 +83,6 @@ const Form = ({
     } catch (err) {
       const validationErrors = {};
 
-
-      console.log(err);
       if (!err.inner) {
         throw err;
       }
