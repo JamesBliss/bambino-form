@@ -4,6 +4,7 @@ import Context from './Context';
 import useField from './useField';
 import Input from './Input';
 import Select from './Select';
+import Check from './Check';
 
 export {
   Form,
@@ -11,5 +12,6 @@ export {
   Context,
   useField,
   Input,
-  Select
+  Select,
+  Check
 };

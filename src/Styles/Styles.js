@@ -171,3 +171,10 @@ export const Select = styled.select`
     outline: none;
   }
 `;
+
+export const Checkbox = styled.input`
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0.5em 0.5em 0.5em 0;
+`;

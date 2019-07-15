@@ -3,7 +3,8 @@ import {
   Label,
   Error,
   Input,
-  Select
+  Select,
+  Checkbox
 } from './Styles';
 
 export {
@@ -11,5 +12,6 @@ export {
   Label,
   Error,
   Input,
-  Select
+  Select,
+  Checkbox
 };

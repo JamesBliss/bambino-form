@@ -120,6 +120,12 @@ storiesOf('Form', module)
               />
             </Form.Scope>
           </Form.Scope>
+          <Form.Scope path='Revision'>
+            <Form.Check
+              label='Meltable'
+              name='Meltable'
+            />
+          </Form.Scope>
           <hr />
           <button type="submit">Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
