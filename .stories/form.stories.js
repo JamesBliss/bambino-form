@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components'
-import { object, lazy, array, of, string } from 'yup';
+import { object, number, boolean, lazy, array, of, string } from 'yup';
 const mapValues = require('lodash/mapValues')
-
 
 // components //
 import * as Form from '../src'
@@ -24,13 +23,12 @@ const schema = object().shape({
   }))
 });
 
-
 const testSchema = object().shape({
   ID: string().required('required'),
   translations: lazy(obj => object(mapValues(obj, () => string().required())))
 });
 
-const testDate = {
+const testData = {
   ID: '5',
   translations: {
     'en': 'hello',
@@ -38,7 +36,7 @@ const testDate = {
   }
 }
 
-// const testDate = {
+// const testData = {
 //   ID: '5',
 //   translations: [
 //     {
@@ -47,6 +45,51 @@ const testDate = {
 //     }
 //   ]
 // }
+
+
+const fancyData = {
+  "ID": "",
+  "Revision": {
+    "TypeID": "",
+    "ClassificationID": "",
+    "Certification": null,
+    "UVA": false,
+    "Fresh": false,
+    "Naked": false,
+    "Meltable": false,
+    "Ingredients": [],
+    "Sizes": []
+  },
+  "Translations": [
+    {
+      "Locale": "en",
+      "Name": "",
+      "Strapline": "",
+      "Description": ""
+    }
+  ]
+};
+
+const fancySchema = object().shape({
+  ID: string(),
+  Revision: object().shape({
+    TypeID: string().required('PRODUCT_TYPE_ID_IS_REQUIRED'),
+    ClassificationID: string().required('PRODUCT_CLASSIFICATION_IS_REQUIRED'),
+    Certification: number().required('PRODUCT_CERTIFICATION_IS_REQUIRED'),
+    UVA: boolean(),
+    Fresh: boolean(),
+    Naked: boolean(),
+    Meltable: boolean(),
+  }),
+  Translations: array().of(
+    object().shape({
+      Locale: string().required('LOCALE_IS_REQUIRED'),
+      Name: string().required('NAME_IS_REQUIRED'),
+      Strapline: number().required('STRAPLINE_IS_REQUIRED'),
+      Description: number().required('DESCRIPTION_IS_REQUIRED'),
+    })
+  )
+});
 
 // story //
 storiesOf('Form', module)
@@ -59,6 +102,32 @@ storiesOf('Form', module)
   })
 
   // stories
+  .add('another test', () => {
+    const FormWrapper = () => {
+      const [fields, setFields] = React.useState({});
+
+      return (
+        <Form.Form
+          schema={ fancySchema }
+          initialData={ fancyData }
+          onSubmit={(data) => setFields(data)}
+        >
+          <Form.Scope path='Translations'>
+            <Form.Scope path={0}>
+              <Form.Input
+                label='Name'
+                name='Name'
+              />
+            </Form.Scope>
+          </Form.Scope>
+          <hr />
+          <button type="submit">Save</button>
+          <pre>{ JSON.stringify(fields, null, 2) }</pre>
+        </Form.Form>
+      )
+    }
+    return <FormWrapper />;
+  })
   .add('key/value validation', () => {
     const FormWrapper = () => {
       const [fields, setFields] = React.useState({});
@@ -66,7 +135,7 @@ storiesOf('Form', module)
       return (
         <Form.Form
           schema={ testSchema }
-          initialData={ testDate}
+          initialData={ testData}
           onSubmit={(data) => setFields(data)}
         >
           <Form.Input
@@ -74,7 +143,7 @@ storiesOf('Form', module)
             name='ID'
           />
           <Form.Scope path='translations'>
-            { Object.keys(testDate.translations).map((key, index) => (
+            { Object.keys(testData.translations).map((key, index) => (
               <React.Fragment>
                 <h1>{ key }</h1>
                 <Form.Input
