@@ -23,6 +23,8 @@ const schema = object().shape({
   }))
 });
 
+console.log(schema)
+
 const testSchema = object().shape({
   ID: string().required('required'),
   translations: lazy(obj => object(mapValues(obj, () => string().required())))
@@ -102,6 +104,80 @@ storiesOf('Form', module)
   })
 
   // stories
+  .add('dynamic schema', () => {
+    const FormWrapper = () => {
+      const [fields, setFields] = React.useState({});
+
+      return (
+        <Form.Form
+          onSubmit={(data) => setFields(data)}
+        >
+          <Form.Input
+            label='First Name'
+            name='first_name'
+            schema={ string().required('First name is required') }
+          />
+          <Form.Input
+            label='Last Name'
+            name='last_name'
+          />
+          <Form.Scope path='languages'>
+            <Form.Input
+              label='Language spoken'
+              name='language_spoken'
+              schema={ string().required('language spoken is required') }
+            />
+            <Form.Input
+              label='Language not spoken'
+              name='language_not_spoken'
+              schema={ string().required('language not spoken is required') }
+            />
+            <Form.Scope path='languages_to_learn'>
+              <Form.Input
+                label='Language language list'
+                name='language_list'
+                schema={ string().required('Language list is required') }
+              />
+            </Form.Scope>
+          </Form.Scope>
+          <Form.Scope path='skills'>
+            <Form.Scope path={ 0 }>
+              <Form.Input
+                label='Skill'
+                name='skill'
+                schema={ string().required('skill is required') }
+              />
+              <Form.Scope path='thing'>
+                <Form.Input
+                  label='name'
+                  name='name'
+                  schema={ string().required('skill name is required') }
+                />
+              </Form.Scope>
+            </Form.Scope>
+            <Form.Scope path={ 1 }>
+              <Form.Input
+                label='Skill'
+                name='skill'
+                schema={ string().required('skill is required') }
+              />
+              <Form.Scope path='thing'>
+                <Form.Input
+                  label='name'
+                  name='name'
+                  schema={ string().required('skill name is required') }
+                />
+              </Form.Scope>
+            </Form.Scope>
+          </Form.Scope>
+          <hr />
+          <button type="submit">Save</button>
+          <pre>{ JSON.stringify(fields, null, 2) }</pre>
+        </Form.Form>
+      )
+    }
+    return <FormWrapper />;
+  })
   .add('another test', () => {
     const FormWrapper = () => {
       const [fields, setFields] = React.useState({});

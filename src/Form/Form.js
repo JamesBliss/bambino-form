@@ -1,10 +1,33 @@
 import React from 'react';
 import dot from 'dot-object';
-import { reach } from 'yup';
+import { reach, object, mixed, array } from 'yup';
 import PropTypes from 'prop-types';
 
 // context
 import FormContext from '../Context';
+
+// helper
+const looptheloop = obj => {
+  const shape = {};
+
+  Object.keys(obj).forEach(key => {
+    const keyType = obj[key].constructor.name;
+
+    if (keyType === 'Object') {
+      shape[key] = object().shape(looptheloop(obj[key]));
+    } else if (keyType === 'Array') {
+      const result = Object.keys(obj[key]).reduce(
+        (r, k) => ({ ...r, ...obj[key][k] }),
+        {}
+      );
+
+      shape[key] = array().of(object().shape(looptheloop({ ...result })));
+    } else {
+      shape[key] = obj[key];
+    }
+  });
+  return shape;
+};
 
 // exported
 const Form = ({
@@ -18,17 +41,29 @@ const Form = ({
   const [fields, setFields] = React.useState([]);
   const [errors, setErrors] = React.useState({});
 
-  function parseFormData() {
+  function parseForm() {
     const data = {};
+    const parsedDymanicSchema = {};
 
-    fields.forEach(({ name, ref, path, parseValue }) => {
+    fields.forEach(({ name, ref, path, parseValue, dymanicSchema }) => {
       const value = dot.pick(path, ref);
+
+      if (dymanicSchema) {
+        parsedDymanicSchema[name] = dymanicSchema;
+      } else {
+        parsedDymanicSchema[name] = mixed().notRequired();
+      }
 
       data[name] = parseValue ? parseValue(value) : value;
     });
 
+    dot.object(parsedDymanicSchema);
     dot.object(data);
-    return data;
+
+    return {
+      data,
+      dymanicSchema: object().shape(looptheloop(parsedDymanicSchema))
+    };
   }
 
   function resetForm() {
@@ -42,9 +77,12 @@ const Form = ({
   }
 
   async function handleFieldValidation({ name, value }) {
+    const { data, dymanicSchema } = parseForm();
+
     try {
-      if (schema) {
-        await reach(schema, name, parseFormData()).validate(value);
+      const runSchema = schema || dymanicSchema;
+      if (runSchema) {
+        await reach(runSchema, name, data).validate(value);
       }
       const { [name]: remove, ...remaining } = errors;
       setErrors(remaining);
@@ -60,17 +98,19 @@ const Form = ({
   }
 
   async function handleValidation(callback = null) {
-    let data = parseFormData();
+    const { data, dymanicSchema } = parseForm();
+    let castData = data;
 
     try {
-      if (schema) {
-        await schema.validate(data, {
+      const runSchema = schema || dymanicSchema;
+      if (runSchema) {
+        await runSchema.validate(data, {
           abortEarly: false,
           stripUnknown: true,
           context
         });
 
-        data = schema.cast(data, {
+        castData = runSchema.cast(data, {
           stripUnknown: true,
           context
         });
@@ -79,7 +119,7 @@ const Form = ({
       setErrors({});
 
       if (typeof callback === 'function') {
-        callback(data);
+        callback(castData);
       }
     } catch (err) {
       const validationErrors = {};

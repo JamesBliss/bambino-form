@@ -16,6 +16,7 @@ const InputField = ({
   optionalLabel,
   multiline,
   size,
+  schema,
   ...rest
 }) => {
   const ref = React.useRef(null);
@@ -23,7 +24,12 @@ const InputField = ({
 
   React.useEffect(() => {
     if (ref.current) {
-      registerField({ name: fieldName, ref: ref.current, path: 'value' });
+      registerField({
+        name: fieldName,
+        ref: ref.current,
+        path: 'value',
+        dymanicSchema: schema
+      });
     }
   }, [ref.current, fieldName]);
 
@@ -64,7 +70,8 @@ InputField.defaultProps = {
   isInline: false,
   optionalLabel: 'optional',
   multiline: false,
-  size: '14px'
+  size: '14px',
+  schema: null
 };
 
 InputField.propTypes = {
@@ -74,7 +81,8 @@ InputField.propTypes = {
   label: PropTypes.string,
   isInline: PropTypes.bool,
   multiline: PropTypes.bool,
-  size: PropTypes.string
+  size: PropTypes.string,
+  schema: PropTypes.any
 };
 
 export default InputField;
