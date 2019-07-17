@@ -37,7 +37,7 @@ const InputField = ({
 
   return (
     <>
-      <input { ...props } />
+      <input id={ fieldName } { ...props } />
 
       { label && <label htmlFor={ fieldName }>{ label }</label> }
 
