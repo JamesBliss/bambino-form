@@ -2,6 +2,7 @@ import React from 'react';
 import dot from 'dot-object';
 import { reach, object, mixed, array } from 'yup';
 import PropTypes from 'prop-types';
+import merge from 'deepmerge';
 
 // context
 import FormContext from '../Context';
@@ -116,7 +117,10 @@ const Form = ({
           context
         });
 
-        finalDataSet = Object.assign({}, initialData, data, castData);
+
+        finalDataSet = merge.all([initialData, data, castData]);
+
+        // finalDataSet = Object.assign({}, initialData, data, castData);
       }
 
       setErrors({});
