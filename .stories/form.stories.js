@@ -93,6 +93,13 @@ const fancySchema = object().shape({
   )
 });
 
+const partialData = {
+  "Locale": "en",
+  "Name": "",
+  "Strapline": "",
+  "Description": ""
+};
+
 // story //
 storiesOf('Form', module)
 
@@ -104,6 +111,36 @@ storiesOf('Form', module)
   })
 
   // stories
+  .add('partial form', () => {
+    const FormWrapper = () => {
+      const [fields, setFields] = React.useState({});
+
+      return (
+        <Form.Form
+          initialData={ partialData }
+          onSubmit={(data) => setFields(data)}
+        >
+          <Form.Input
+            label='Name'
+            name='Name'
+            schema={ string().required('Name is required') }
+          />
+          <Form.Input
+            label='Strapline'
+            name='Strapline'
+          />
+          <Form.Input
+            label='Description'
+            name='Description'
+          />
+          <hr />
+          <button type="submit">Save</button>
+          <pre>{ JSON.stringify(fields, null, 2) }</pre>
+        </Form.Form>
+      )
+    }
+    return <FormWrapper />;
+  })
   .add('dynamic schema', () => {
     const FormWrapper = () => {
       const [fields, setFields] = React.useState({});

@@ -100,6 +100,7 @@ const Form = ({
   async function handleValidation(callback = null) {
     const { data, dymanicSchema } = parseForm();
     let castData = data;
+    let finalDataSet = {};
 
     try {
       const runSchema = schema || dymanicSchema;
@@ -114,12 +115,14 @@ const Form = ({
           stripUnknown: true,
           context
         });
+
+        finalDataSet = Object.assign({}, initialData, data, castData);
       }
 
       setErrors({});
 
       if (typeof callback === 'function') {
-        callback(castData);
+        callback(finalDataSet);
       }
     } catch (err) {
       const validationErrors = {};
