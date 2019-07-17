@@ -94,12 +94,14 @@ const fancySchema = object().shape({
 });
 
 const partialData = {
-  Translations: {
-    "Locale": "en",
-    "Name": "",
-    "Strapline": "",
-    "Description": ""
-  }
+  Translations: [
+    {
+      "Locale": "en",
+      "Name": "",
+      "Strapline": "",
+      "Description": ""
+    }
+  ]
 };
 
 // story //
@@ -123,19 +125,36 @@ storiesOf('Form', module)
           onSubmit={(data) => setFields(data)}
         >
           <Form.Scope path='Translations'>
-            <Form.Input
-              label='Name'
-              name='Name'
-              schema={ string().required('Name is required') }
+            <Form.Scope path={ 0 }>
+              <Form.Input
+                label='Name'
+                name='Name'
+                schema={ string().required('Name is required') }
+                />
+              <Form.Input
+                label='Strapline'
+                name='Strapline'
+                />
+              <Form.Input
+                label='Description'
+                name='Description'
               />
-            <Form.Input
-              label='Strapline'
-              name='Strapline'
+            </Form.Scope>
+            <Form.Scope path={ 1 }>
+              <Form.Input
+                label='Name'
+                name='Name'
+                schema={ string().required('Name is required') }
+                />
+              <Form.Input
+                label='Strapline'
+                name='Strapline'
+                />
+              <Form.Input
+                label='Description'
+                name='Description'
               />
-            <Form.Input
-              label='Description'
-              name='Description'
-            />
+            </Form.Scope>
           </Form.Scope>
           <hr />
           <button type="submit">Save</button>

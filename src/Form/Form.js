@@ -117,8 +117,10 @@ const Form = ({
           context
         });
 
+        console.log({ initialData }, { data }, { castData });
 
-        finalDataSet = merge.all([initialData, data, castData]);
+
+        finalDataSet = merge.all([initialData, data, castData], { arrayMerge: (destinationArray, sourceArray) => sourceArray });
 
         // finalDataSet = Object.assign({}, initialData, data, castData);
       }
