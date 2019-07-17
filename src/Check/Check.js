@@ -4,18 +4,10 @@ import PropTypes from 'prop-types';
 // helper
 import useField from '../useField';
 
-// styles
-import { Wrapper, Checkbox, Label, Error } from '../Styles';
-
 // exported component
 const InputField = ({
   name,
   label,
-  isRequired,
-  isInline,
-  optionalLabel,
-  multiline,
-  size,
   ...rest
 }) => {
   const ref = React.useRef(null);
@@ -44,38 +36,21 @@ const InputField = ({
   };
 
   return (
-    <Wrapper size={ size } isInline={ true }>
-      <Checkbox { ...props } />
+    <>
+      <input { ...props } />
 
-      { label && (
-        <Label isInline={ true } htmlFor={ fieldName }>
-          { label }
-          { !isRequired && (<span>{ optionalLabel }</span>) }
-        </Label>
-      ) }
+      { label && <label htmlFor={ fieldName }>{ label }</label> }
 
-      { error && <Error>{ error }</Error> }
-    </Wrapper>
+      { error && <span>{ error }</span> }
+    </>
   );
 };
 
-InputField.defaultProps = {
-  label: null,
-  isRequired: true,
-  isInline: false,
-  optionalLabel: 'optional',
-  multiline: false,
-  size: '14px'
-};
+InputField.defaultProps = { label: null };
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
-  optionalLabel: PropTypes.string,
-  isRequired: PropTypes.bool,
-  label: PropTypes.string,
-  isInline: PropTypes.bool,
-  multiline: PropTypes.bool,
-  size: PropTypes.string
+  label: PropTypes.string
 };
 
 export default InputField;

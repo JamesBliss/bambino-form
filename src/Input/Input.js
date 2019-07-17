@@ -4,18 +4,11 @@ import PropTypes from 'prop-types';
 // helper
 import useField from '../useField';
 
-// styles
-import { Wrapper, Input, Label, Error } from '../Styles';
-
 // exported component
 const InputField = ({
   name,
   label,
-  isRequired,
-  isInline,
-  optionalLabel,
   multiline,
-  size,
   schema,
   ...rest
 }) => {
@@ -45,43 +38,30 @@ const InputField = ({
   };
 
   return (
-    <Wrapper size={ size } isInline={ isInline }>
-      { label && (
-        <Label isInline={ isInline } htmlFor={ fieldName }>
-          { label }
-          { !isRequired && (<span>{ optionalLabel }</span>) }
-        </Label>
-      ) }
+    <>
+      { label && <label htmlFor={ fieldName }>{ label }</label> }
 
       { multiline ? (
         <textarea { ...props } />
       ) : (
-        <Input { ...props } />
+        <input { ...props } />
       ) }
 
-      { error && <Error>{ error }</Error> }
-    </Wrapper>
+      { error && <span>{ error }</span> }
+    </>
   );
 };
 
 InputField.defaultProps = {
   label: null,
-  isRequired: true,
-  isInline: false,
-  optionalLabel: 'optional',
   multiline: false,
-  size: '14px',
   schema: null
 };
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
-  optionalLabel: PropTypes.string,
-  isRequired: PropTypes.bool,
   label: PropTypes.string,
-  isInline: PropTypes.bool,
   multiline: PropTypes.bool,
-  size: PropTypes.string,
   schema: PropTypes.any
 };
 

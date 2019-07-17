@@ -43,7 +43,7 @@ const Form = ({
   const [errors, setErrors] = React.useState({});
 
   function parseForm() {
-    const data = {};
+    const data = Object.assign({}, initialData);
     const parsedDymanicSchema = {};
 
     fields.forEach(({ name, ref, path, parseValue, dymanicSchema }) => {
@@ -117,12 +117,14 @@ const Form = ({
           context
         });
 
-        console.log({ initialData }, { data }, { castData });
-
-
-        finalDataSet = merge.all([initialData, data, castData], { arrayMerge: (destinationArray, sourceArray) => sourceArray });
-
-        // finalDataSet = Object.assign({}, initialData, data, castData);
+        finalDataSet = merge(initialData, castData, {
+          arrayMerge: (destinationArray, sourceArray) => {
+            return sourceArray.map((mapArray, index) => ({
+              ...destinationArray[index],
+              ...mapArray
+            }));
+          }
+        });
       }
 
       setErrors({});

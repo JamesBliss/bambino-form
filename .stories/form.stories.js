@@ -1,15 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import styled from 'styled-components'
-import { object, number, boolean, lazy, array, of, string } from 'yup';
+import { object, number, boolean, lazy, array, string } from 'yup';
 const mapValues = require('lodash/mapValues')
 
 // components //
 import * as Form from '../src'
-
-const handleSubmit = (fields) => {
-  console.log({fields})
-}
 
 const schema = object().shape({
   first_name: string().required('First name is required'),
@@ -22,8 +17,6 @@ const schema = object().shape({
     label: string()
   }))
 });
-
-console.log(schema)
 
 const testSchema = object().shape({
   ID: string().required('required'),
@@ -94,7 +87,19 @@ const fancySchema = object().shape({
 });
 
 const partialData = {
-  Translations: [
+  "ID": "",
+  "Revision": {
+    "TypeID": "",
+    "ClassificationID": "",
+    "Certification": "",
+    "UVA": false,
+    "Fresh": false,
+    "Naked": false,
+    "Meltable": false,
+    "Ingredients": [],
+    "Sizes": []
+  },
+  "Translations": [
     {
       "Locale": "en",
       "Name": "",
@@ -103,6 +108,28 @@ const partialData = {
     }
   ]
 };
+
+const partialSchema = object().shape({
+  ID: string(),
+  Revision: object().shape({
+    TypeID: string(),
+    ClassificationID: string(),
+    Certification: string(),
+    UVA: boolean(),
+    Fresh: boolean(),
+    Naked: boolean(),
+    Meltable: boolean(),
+  }),
+  Translations: array().of(
+    object().shape({
+      Locale: string(),
+      Name: string().required('NAME_IS_REQUIRED'),
+      Strapline: string(),
+      Description: string(),
+    })
+  )
+});
+
 
 // story //
 storiesOf('Form', module)
@@ -122,38 +149,49 @@ storiesOf('Form', module)
       return (
         <Form.Form
           initialData={ partialData }
+          schema={ partialSchema }
           onSubmit={(data) => setFields(data)}
         >
           <Form.Scope path='Translations'>
-            <Form.Scope path={ 0 }>
-              <Form.Input
-                label='Name'
-                name='Name'
-                schema={ string().required('Name is required') }
+            <Form.Scope path={0}>
+              <div>
+                <Form.Input
+                  label='Name'
+                  name='Name'
                 />
+              </div>
+              <div>
               <Form.Input
                 label='Strapline'
                 name='Strapline'
                 />
-              <Form.Input
-                label='Description'
-                name='Description'
-              />
+              </div>
+              <div>
+                <Form.Input
+                  label='Description'
+                  name='Description'
+                />
+              </div>
             </Form.Scope>
             <Form.Scope path={ 1 }>
-              <Form.Input
-                label='Name'
-                name='Name'
-                schema={ string().required('Name is required') }
+              <div>
+                <Form.Input
+                  label='Name'
+                  name='Name'
                 />
+              </div>
+              <div>
               <Form.Input
                 label='Strapline'
                 name='Strapline'
                 />
-              <Form.Input
-                label='Description'
-                name='Description'
-              />
+              </div>
+              <div>
+                <Form.Input
+                  label='Description'
+                  name='Description'
+                />
+              </div>
             </Form.Scope>
           </Form.Scope>
           <hr />

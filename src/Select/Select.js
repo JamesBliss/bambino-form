@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 // hook
 import useField from '../useField';
 
-// styles
-import { Wrapper, Select, Label, Error } from '../Styles';
-
 // exported component
 function SelectField({
   name,
@@ -14,10 +11,6 @@ function SelectField({
   placeholder,
   defaultValue,
   options,
-  isRequired,
-  optionalLabel,
-  isInline,
-  size,
   ...rest
 }) {
   const ref = React.useRef(null);
@@ -49,15 +42,10 @@ function SelectField({
   };
 
   return (
-    <Wrapper size={ size } isInline={ isInline }>
-      { label && (
-        <Label isInline={ isInline } htmlFor={ fieldName }>
-          { label }
-          { !isRequired && (<span> — { optionalLabel }</span>) }
-        </Label>
-      ) }
+    <>
+      { label && <label htmlFor={ fieldName }> { label } </label> }
 
-      <Select { ...props }>
+      <select { ...props }>
         <option value={ defaultValue } disabled>
           { placeholder }
         </option>
@@ -66,10 +54,10 @@ function SelectField({
             { title }
           </option>
         )) }
-      </Select>
+      </select>
 
-      { error && <Error>{ error }</Error> }
-    </Wrapper>
+      { error && <span>{ error }</span> }
+    </>
   );
 }
 
@@ -78,11 +66,7 @@ SelectField.defaultProps = {
   label: null,
   defaultValue: '',
   placeholder: 'Please select',
-  options: [],
-  isRequired: true,
-  optionalLabel: 'optional',
-  size: '14px',
-  isInline: false
+  options: []
 };
 
 SelectField.propTypes = {
@@ -90,11 +74,7 @@ SelectField.propTypes = {
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
   label: PropTypes.string,
-  options: PropTypes.array,
-  optionalLabel: PropTypes.string,
-  isRequired: PropTypes.bool,
-  size: PropTypes.string,
-  isInline: PropTypes.bool
+  options: PropTypes.array
 };
 
 export default SelectField;
