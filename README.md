@@ -1,4 +1,10 @@
-# bambino-form
+# Github
+## [repo](https://github.com/JamesBliss/bambino-form)
+## [issues](https://github.com/JamesBliss/bambino-form/issues)
 
-# [playground](https://jamesbliss.github.io/bambino-form/playground)
-# [documentation](https://jamesbliss.github.io/bambino-form/documentation)
+---
+
+# Documentation
+## [home](https://jamesbliss.github.io/bambino-form)
+## [playground](https://jamesbliss.github.io/bambino-form/playground)
+## [documentation](https://jamesbliss.github.io/bambino-form/documentation)
