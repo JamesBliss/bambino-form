@@ -1,7 +1,7 @@
 {
   "name": "bambino-form",
   "version": "0.0.0-beta.11",
-  "description": "Il mio piccolo bambino, form.",
+  "description": "La mia piccola forma di bambino",
   "private": false,
   "license": "MIT",
   "main": "index.js",
@@ -21,14 +21,14 @@
     "storybook:deploy": "storybook-to-ghpages",
     "docz:dev": "docz dev --port=7777",
     "docz:build": "docz build --desst=docs/playground",
-    "clean": "rimraf lib",
     "test": "jest --passWithNoTests",
     "test:watch": "yarn jest src --watch --notify",
-    "cover": "jest src --coverage",
-    "lint": "eslint src",
-    "compile": "rm -rf dist/ && babel --copy-files src --out-dir dist",
+    "test:cover": "jest src --coverage",
     "build": "yarn docz:build && yarn storybook:build",
     "build:full": "yarn clean && yarn lint && yarn test && yarn compile && docz:build && storybook:build",
+    "lint": "eslint src",
+    "clean": "rimraf lib",
+    "compile": "rm -rf dist/ && babel --copy-files src --out-dir dist",
     "release": "chmod +x release.sh && ./release.sh"
   },
   "peerDependencies": {
