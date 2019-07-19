@@ -7,7 +7,7 @@ import FormContext from '../Context';
 // exported component
 export default function useField(name) {
   const {
-    initialData,
+    initialValues,
     errors,
     scopePath,
     unregisterField,
@@ -20,7 +20,7 @@ export default function useField(name) {
 
   useEffect(() => () => unregisterField(fieldName), [fieldName]);
 
-  const defaultValue = dot.pick(fieldName, initialData);
+  const defaultValue = dot.pick(fieldName, initialValues);
   const error = errors[fieldName];
 
   return {

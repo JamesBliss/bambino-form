@@ -10,10 +10,17 @@ const InputField = ({
   label,
   multiline,
   schema,
+  defaultValue,
   ...rest
 }) => {
   const ref = React.useRef(null);
-  const { fieldName, handleFieldValidation, registerField, defaultValue, error } = useField(name);
+  const {
+    fieldName,
+    handleFieldValidation,
+    registerField,
+    defaultValue: initialData,
+    error
+  } = useField(name);
 
   React.useEffect(() => {
     if (ref.current) {
@@ -32,7 +39,7 @@ const InputField = ({
     id: fieldName,
     name: fieldName,
     'aria-label': fieldName,
-    defaultValue,
+    defaultValue: initialData || defaultValue,
     onChange: ({ target }) => handleFieldValidation({ name: target.name, value: target.value }),
     onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target.value })
   };
@@ -55,14 +62,16 @@ const InputField = ({
 InputField.defaultProps = {
   label: null,
   multiline: false,
-  schema: null
+  schema: null,
+  defaultValue: null
 };
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   multiline: PropTypes.bool,
-  schema: PropTypes.any
+  schema: PropTypes.any,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default InputField;

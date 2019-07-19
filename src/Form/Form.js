@@ -32,7 +32,7 @@ const looptheloop = obj => {
 
 // exported
 const Form = ({
-  initialData,
+  initialValues,
   children,
   schema,
   onSubmit,
@@ -42,7 +42,7 @@ const Form = ({
   const [errors, setErrors] = React.useState({});
 
   function parseForm() {
-    const data = Object.assign({}, initialData);
+    const data = Object.assign({}, initialValues);
     const parsedDymanicSchema = {};
 
     fields.forEach(({ name, ref, path, parseValue, dymanicSchema }) => {
@@ -116,7 +116,7 @@ const Form = ({
           context: {}
         });
 
-        finalDataSet = merge(initialData, castData, {
+        finalDataSet = merge(initialValues, castData, {
           arrayMerge: (destinationArray, sourceArray) => {
             return sourceArray.map((mapArray, index) => ({
               ...destinationArray[index],
@@ -163,7 +163,7 @@ const Form = ({
   return (
     <FormContext.Provider
       value={ {
-        initialData,
+        initialValues,
         errors,
         scopePath: '',
         registerField,
@@ -181,14 +181,18 @@ const Form = ({
 
 
 Form.defaultProps = {
-  initialData: {},
+  initialValues: {},
   schema: null
 };
 
 Form.propTypes = {
-  initialData: PropTypes.object,
+  /** Initial values to populate the form */
+  initialValues: PropTypes.object,
+  /** Overall yup validation object. ❗️ Will override inline field level schema */
   schema: PropTypes.object,
+  /** Any react childrent you would like 😁 */
   children: PropTypes.any.isRequired,
+  /** Function which returns the data object and a resetForm function */
   onSubmit: PropTypes.func.isRequired
 };
 

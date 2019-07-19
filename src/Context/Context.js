@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 export default createContext({
-  initialData: {},
+  initialValues: {},
   errors: {},
   scopePath: '',
   registerField: () => {},
