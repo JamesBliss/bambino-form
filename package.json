@@ -79,6 +79,7 @@
   "dependencies": {
     "deepmerge": "^4.0.0",
     "dot-object": "^1.8.1",
+    "use-debounce": "^2.2.0",
     "yup": "^0.27.0"
   }
 }

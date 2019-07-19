@@ -3,6 +3,7 @@ import dot from 'dot-object';
 import { reach, object, mixed, array } from 'yup';
 import PropTypes from 'prop-types';
 import merge from 'deepmerge';
+import { useDebouncedCallback } from 'use-debounce';
 
 // context
 import FormContext from '../Context';
@@ -36,6 +37,7 @@ const Form = ({
   children,
   schema,
   onSubmit,
+  fieldDebounced,
   ...rest
 }) => {
   const [fields, setFields] = React.useState([]);
@@ -76,7 +78,7 @@ const Form = ({
     });
   }
 
-  async function handleFieldValidation({ name, value }) {
+  async function handleDebouncedFieldValidation({ name, value }) {
     const { data, dymanicSchema } = parseForm();
 
     try {
@@ -97,6 +99,16 @@ const Form = ({
       setErrors(validationErrors);
     }
   }
+
+  // Debounce callback
+  const [handleFieldValidation] = useDebouncedCallback(
+    // function
+    ({ name, value }) => {
+      handleDebouncedFieldValidation({ name, value });
+    },
+    // delay in ms
+    fieldDebounced
+  );
 
   async function handleValidation(callback = null) {
     const { data, dymanicSchema } = parseForm();
@@ -183,7 +195,8 @@ const Form = ({
 
 Form.defaultProps = {
   initialValues: {},
-  schema: null
+  schema: null,
+  fieldDebounced: 100
 };
 
 Form.propTypes = {
@@ -194,7 +207,8 @@ Form.propTypes = {
   /** Any react childrent you would like 😁 */
   children: PropTypes.any.isRequired,
   /** Function which returns the data object and a resetForm function */
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  fieldDebounced: PropTypes.number
 };
 
 export default Form;
