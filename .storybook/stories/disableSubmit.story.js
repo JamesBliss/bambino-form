@@ -49,15 +49,12 @@ storiesOf('Form', module)
             <br />
             <hr />
             <Form.Input
-              isInline
               label='First Name'
               placeholder='Enter first name'
               name='first_name'
             />
             <hr />
             <Form.Input
-              isInline
-              isRequired={ false }
               label='Last Name'
               placeholder='Enter last name'
               name='last_name'

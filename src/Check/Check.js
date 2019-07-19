@@ -2,37 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // helper
-import useField from '../useField';
+import useDefault from '../useDefault';
 
 // exported component
 const InputField = ({
   name,
   label,
+  schema,
+  value,
   ...rest
 }) => {
   const ref = React.useRef(null);
-  const { fieldName, handleFieldValidation, registerField, defaultValue, error } = useField(name);
 
-  React.useEffect(() => {
-    if (ref.current) {
-      registerField({
-        name: fieldName,
-        ref: ref.current,
-        path: 'checked'
-      });
-    }
-  }, [ref.current, fieldName]);
+  // custom behaviour and logic from useField
+  const {
+    error,
+    fieldName,
+    defaultValue,
+    ...bag
+  } = useDefault({
+    name,
+    ref,
+    schema,
+    value,
+    path: 'checked'
+  });
 
+  // props for check element
   const props = {
     ...rest,
-    ref,
-    id: fieldName,
-    name: fieldName,
-    'aria-label': fieldName,
+    ...bag,
     type: 'checkbox',
-    defaultChecked: defaultValue,
-    onChange: ({ target }) => handleFieldValidation({ name: target.name, value: target.checked }),
-    onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target.checked })
+    defaultValue,
+    fieldName,
+    ref
   };
 
   return (
@@ -46,11 +49,17 @@ const InputField = ({
   );
 };
 
-InputField.defaultProps = { label: null };
+InputField.defaultProps = {
+  label: null,
+  value: false,
+  schema: null
+};
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
+  schema: PropTypes.any,
+  value: PropTypes.bool
 };
 
 export default InputField;

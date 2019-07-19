@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // helper
-import useField from '../useField';
+import useDefault from '../useDefault';
 
 // exported component
 const InputField = ({
@@ -10,38 +10,31 @@ const InputField = ({
   label,
   multiline,
   schema,
-  defaultValue,
+  value,
   ...rest
 }) => {
   const ref = React.useRef(null);
+
+  // custom behaviour and logic from useField
   const {
+    error,
     fieldName,
-    handleFieldValidation,
-    registerField,
-    defaultValue: initialData,
-    error
-  } = useField(name);
+    defaultValue,
+    ...bag
+  } = useDefault({
+    name,
+    ref,
+    schema,
+    value
+  });
 
-  React.useEffect(() => {
-    if (ref.current) {
-      registerField({
-        name: fieldName,
-        ref: ref.current,
-        path: 'value',
-        dymanicSchema: schema
-      });
-    }
-  }, [ref.current, fieldName]);
-
+  // props to be spread on input elemnt
   const props = {
     ...rest,
-    ref,
-    id: fieldName,
-    name: fieldName,
-    'aria-label': fieldName,
-    defaultValue: initialData || defaultValue,
-    onChange: ({ target }) => handleFieldValidation({ name: target.name, value: target.value }),
-    onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target.value })
+    ...bag,
+    defaultValue,
+    fieldName,
+    ref
   };
 
   return (
@@ -63,7 +56,7 @@ InputField.defaultProps = {
   label: null,
   multiline: false,
   schema: null,
-  defaultValue: null
+  value: null
 };
 
 InputField.propTypes = {
@@ -71,7 +64,7 @@ InputField.propTypes = {
   label: PropTypes.string,
   multiline: PropTypes.bool,
   schema: PropTypes.any,
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default InputField;

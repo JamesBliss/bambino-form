@@ -62,7 +62,6 @@ const schema = object().shape({
             />
             <hr />
             <Form.Input
-              isRequired={ false }
               label='Last Name'
               placeholder='Enter last name'
               name='last_name'
@@ -91,7 +90,6 @@ const schema = object().shape({
                     />
                     <br />
                     <Form.Input
-                      isRequired={ false }
                       label='Translation Label'
                       placeholder='Enter translataion label'
                       name='label'

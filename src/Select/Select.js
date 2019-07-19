@@ -2,43 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // hook
-import useField from '../useField';
+import useDefault from '../useDefault';
 
 // exported component
 function SelectField({
   name,
   label,
   placeholder,
-  defaultValue,
+  value,
   options,
+  schema,
   ...rest
 }) {
   const ref = React.useRef(null);
 
+  // custom behaviour and logic from useField
   const {
+    error,
     fieldName,
-    registerField,
-    handleFieldValidation,
-    defaultValue: initialData,
-    error
-  } = useField(name);
+    defaultValue,
+    ...bag
+  } = useDefault({
+    name,
+    ref,
+    schema,
+    value
+  });
 
-  React.useEffect(() => {
-    if (ref.current) {
-      registerField({ name: fieldName, ref: ref.current, path: 'value' });
-    }
-  }, [ref.current, fieldName]);
-
+  // props to be spread on select element
   const props = {
     ...rest,
-    ref,
-    id: fieldName,
-    name: fieldName,
-    'aria-label': fieldName,
-    defaultValue: initialData || defaultValue,
-    multiple: false,
-    onChange: ({ target }) => handleFieldValidation({ name: target.name, value: target.value }),
-    onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target.value })
+    ...bag,
+    defaultValue,
+    fieldName,
+    ref
   };
 
   return (
@@ -64,15 +61,17 @@ function SelectField({
 
 SelectField.defaultProps = {
   label: null,
-  defaultValue: '',
+  schema: null,
+  value: '',
   placeholder: 'Please select',
   options: []
 };
 
 SelectField.propTypes = {
   name: PropTypes.string.isRequired,
+  schema: PropTypes.any,
   placeholder: PropTypes.string,
-  defaultValue: PropTypes.string,
+  value: PropTypes.string,
   label: PropTypes.string,
   options: PropTypes.array
 };
