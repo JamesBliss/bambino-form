@@ -31,8 +31,8 @@ const useDefault = ({ name, ref, schema, value, path = 'value' }) => {
     'aria-label': fieldName,
     defaultValue: defaultValue || value,
     error,
-    onChange: ({ target }) => handleFieldValidation({ name: target.name, value: target.value }),
-    onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target.value })
+    onChange: ({ target }) => handleFieldValidation({ name: target.name, value: target.checked }),
+    onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target.checked })
   };
 
   return props;

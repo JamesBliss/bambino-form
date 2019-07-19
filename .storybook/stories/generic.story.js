@@ -15,7 +15,7 @@ import markdown from '../../README.md'
 const schema = object().shape({
   name: string().required('Name is required'),
   language: string().required('Language is required'),
-  alive: bool()
+  alive: bool().oneOf([true], 'Field must be checked')
 });
 
 // story //

@@ -1,0 +1,55 @@
+---
+name: Check
+route: /check
+---
+
+import { Playground, Props } from 'docz'
+import { bool } from 'yup';
+import Form from '../../src/Form/Form'
+import Check from '../../src/Check/Check'
+
+# Check
+
+This exported component is not expected to be your solution within a project but more an example of how to use the library.
+
+## Props
+
+<Props of={ Check } />
+
+## Basic usage
+
+<Playground>
+  <Form onSubmit={ _ => _}>
+    <Check
+      name='first_name'
+      placeholder='Enter First Name'
+      label='First name'
+    />
+  </Form>
+</Playground>
+
+## Multiline usage
+
+<Playground>
+  <Form onSubmit={ _ => _}>
+    <Check
+      label='Description'
+      name='description'
+      placeholder='Enter Description'
+      multiline
+    />
+  </Form>
+</Playground>
+
+## Inline schema usage
+
+<Playground>
+  <Form onSubmit={ _ => _}>
+    <Check
+      label='Last Name'
+      name='last_name'
+      placeholder='Enter Last Name'
+      schema={ bool().oneOf([true], 'Field must be checked') }
+    />
+  </Form>
+</Playground>

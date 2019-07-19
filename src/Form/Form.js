@@ -84,6 +84,7 @@ const Form = ({
       if (runSchema) {
         await reach(runSchema, name, data).validate(value);
       }
+
       const { [name]: remove, ...remaining } = errors;
       setErrors(remaining);
     } catch (err) {

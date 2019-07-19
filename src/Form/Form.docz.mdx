@@ -27,6 +27,7 @@ The `<Form />` component is the most important element of the puzzle, it control
       name='name'
       placeholder='Enter name'
     />
+    <br />
     {/* This is required because docz doesn't support form submission 🤦‍ */}
     <Context.Consumer>
       { ({ handleSubmit }) => (
@@ -44,16 +45,18 @@ The `<Form />` component is the most important element of the puzzle, it control
       first_name: 'James',
       last_name: 'Bliss'
     } }
-    onSubmit={ data => alert(JSON.stringify(data)) }
+    onSubmit={ data => alert(JSON.stringify(data, null, 2)) }
   >
     <Input
       name='first_name'
       placeholder='Enter first name'
     />
+    <br />
     <Input
       name='last_name'
       placeholder='Enter last name'
     />
+    <br />
     {/* This is required because docz doesn't support form submission 🤦‍ */}
     <Context.Consumer>
       { ({ handleSubmit }) => (
@@ -77,10 +80,12 @@ The `<Form />` component is the most important element of the puzzle, it control
       name='first_name'
       placeholder='Enter first name'
     />
+    <br />
     <Input
       name='last_name'
       placeholder='Enter last name'
     />
+    <br />
     {/* This is required because docz doesn't support form submission 🤦‍ */}
     <Context.Consumer>
       { ({ handleSubmit }) => (
