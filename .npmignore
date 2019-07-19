@@ -21,6 +21,9 @@ webpack.js
 yarn.lock
 **/*.test.js
 **/*.story.js
+**/*.docz.mdx
+**/**/*.story.js
+**/**/*.docz.mdx
 **/_story.js
 **/__tests__
 **/_story

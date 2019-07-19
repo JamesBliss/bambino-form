@@ -1,6 +1,6 @@
 {
   "name": "bambino-form",
-  "version": "0.0.0-beta.10",
+  "version": "0.0.0-beta.11",
   "description": "Il mio piccolo bambino, form.",
   "private": false,
   "license": "MIT",
@@ -16,17 +16,20 @@
   },
   "homepage": "https://jamesbliss.github.io/bambino-form",
   "scripts": {
-    "storybook": "start-storybook -p 6007",
-    "build-storybook": "build-storybook -s ./public -o .out",
-    "deploy-storybook": "storybook-to-ghpages",
+    "storybook:dev": "start-storybook -p 5555",
+    "storybook:build": "build-storybook -c .storybook -o docs/playground",
+    "storybook:deploy": "storybook-to-ghpages",
+    "docz:dev": "docz dev --port=7777",
+    "docz:build": "docz build --desst=docs/playground",
     "clean": "rimraf lib",
     "test": "jest --passWithNoTests",
     "test:watch": "yarn jest src --watch --notify",
     "cover": "jest src --coverage",
     "lint": "eslint src",
     "compile": "rm -rf dist/ && babel --copy-files src --out-dir dist",
-    "build": "yarn clean && yarn lint && yarn test && yarn compile",
-    "release": "chmod +x release.sh && ./release.sh && npm run deploy-storybook"
+    "build": "yarn docz:build && yarn storybook:build",
+    "build:full": "yarn clean && yarn lint && yarn test && yarn compile && docz:build && storybook:build",
+    "release": "chmod +x release.sh && ./release.sh"
   },
   "peerDependencies": {
     "react": ">= 16.8",
@@ -61,6 +64,7 @@
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-react-transform": "^3.0.0",
     "babel-plugin-styled-components": "^1.10.6",
+    "docz": "^2.0.0-rc.1",
     "eslint": "^6.0.1",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -74,7 +78,7 @@
   },
   "dependencies": {
     "deepmerge": "^4.0.0",
-    "dot-object": "^1.7.1",
+    "dot-object": "^1.8.1",
     "yup": "^0.27.0"
   }
 }

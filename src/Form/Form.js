@@ -35,7 +35,6 @@ const Form = ({
   initialData,
   children,
   schema,
-  context,
   onSubmit,
   ...rest
 }) => {
@@ -109,12 +108,12 @@ const Form = ({
         await runSchema.validate(data, {
           abortEarly: false,
           stripUnknown: true,
-          context
+          context: {}
         });
 
         castData = runSchema.cast(data, {
           stripUnknown: true,
-          context
+          context: {}
         });
 
         finalDataSet = merge(initialData, castData, {
@@ -167,10 +166,10 @@ const Form = ({
         initialData,
         errors,
         scopePath: '',
-        schema,
-        handleFieldValidation,
         registerField,
-        unregisterField
+        unregisterField,
+        handleFieldValidation,
+        handleSubmit
       } }
     >
       <form { ...rest } data-testid='form' onSubmit={ handleSubmit }>
@@ -183,14 +182,12 @@ const Form = ({
 
 Form.defaultProps = {
   initialData: {},
-  schema: null,
-  context: {}
+  schema: null
 };
 
 Form.propTypes = {
   initialData: PropTypes.object,
   schema: PropTypes.object,
-  context: PropTypes.object,
   children: PropTypes.any.isRequired,
   onSubmit: PropTypes.func.isRequired
 };

@@ -69,8 +69,10 @@ if [[ "$response" =~ ^([nN][oO]|[nN])+$ ]]; then
 
   read -r -p "Publish package? [y/N] " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
-    cp -rf .npmignore package.json ./dist
+    cp -rf .npmignore README.md package.json ./dist
     echo "cd ./dist && npm publish --tag $version --access public"
     cd ./dist && npm publish --tag $version --access public
   fi
 fi
+
+# npm publish --tag beta --access public

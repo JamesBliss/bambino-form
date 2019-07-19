@@ -1,0 +1,43 @@
+---
+name: Form
+route: /Form
+---
+
+import { Playground, Props } from 'docz'
+import { string } from 'yup';
+import Form from '../../src/Form/Form'
+import Context from '../../src/Context/Context'
+import Input from '../../src/Input/Input'
+
+# Form
+
+The `<Form />` component is the most imported element of the puzzle, it controls the flow and logic of all that reside within it.
+
+`<Form />` is simply the place you set a parent schema, initial data set and the sumbit fuction.
+
+- `schema` is optional because as we all know sometimes you don't need validation and on top of that sometimes you want to specify validation on a per field level.
+- `initialData` is optional because again sometimes you don't want to have a blank object at the top of you component. The data structure will be created dynamically based on the fields within the form.
+
+
+## Props
+
+<Props of={ Form } />
+
+## Basic usage
+
+<Playground sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+  <Form onSubmit={ data => alert(JSON.stringify(data)) }>
+    <h1>Add any content / elements</h1>
+    <Input
+      name='name'
+      placeholder='Enter name'
+      schema={ string().required('name is required') }
+    />
+    {/* This is required because docz doesn't support form submission 🤦‍ */}
+    <Context.Consumer>
+      { ({ handleSubmit }) => (
+        <button onClick={ (e) => handleSubmit(e) }>Submit name </button>
+      )}
+    </Context.Consumer>
+  </Form>
+</Playground>

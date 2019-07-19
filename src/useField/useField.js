@@ -12,6 +12,7 @@ export default function useField(name) {
     scopePath,
     unregisterField,
     registerField,
+    handleSubmit,
     handleFieldValidation
   } = useContext(FormContext);
 
@@ -24,6 +25,7 @@ export default function useField(name) {
 
   return {
     fieldName,
+    handleSubmit,
     handleFieldValidation,
     registerField,
     defaultValue,

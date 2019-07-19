@@ -1,17 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { object, number, boolean, lazy, array, string } from 'yup';
-const mapValues = require('lodash/mapValues')
+import mapValues from 'lodash/mapValues';
 
 // components //
-import * as Form from '../src'
+import * as Form from '../../src';
+
 
 const schema = object().shape({
   first_name: string().required('First name is required'),
   last_name: string(),
-  details: object().shape({
-    language: string().required('Language is required')
-  }),
+  details: object().shape({ language: string().required('Language is required') }),
   translations: array().of(object().shape({
     id: string().required('Translation ID is required'),
     label: string()
@@ -29,7 +28,7 @@ const testData = {
     'en': 'hello',
     'fr': ''
   }
-}
+};
 
 // const testData = {
 //   ID: '5',
@@ -43,24 +42,24 @@ const testData = {
 
 
 const fancyData = {
-  "ID": "",
-  "Revision": {
-    "TypeID": "",
-    "ClassificationID": "",
-    "Certification": null,
-    "UVA": false,
-    "Fresh": false,
-    "Naked": false,
-    "Meltable": false,
-    "Ingredients": [],
-    "Sizes": []
+  'ID': '',
+  'Revision': {
+    'TypeID': '',
+    'ClassificationID': '',
+    'Certification': null,
+    'UVA': false,
+    'Fresh': false,
+    'Naked': false,
+    'Meltable': false,
+    'Ingredients': [],
+    'Sizes': []
   },
-  "Translations": [
+  'Translations': [
     {
-      "Locale": "en",
-      "Name": "",
-      "Strapline": "",
-      "Description": ""
+      'Locale': 'en',
+      'Name': '',
+      'Strapline': '',
+      'Description': ''
     }
   ]
 };
@@ -74,37 +73,37 @@ const fancySchema = object().shape({
     UVA: boolean(),
     Fresh: boolean(),
     Naked: boolean(),
-    Meltable: boolean(),
+    Meltable: boolean()
   }),
   Translations: array().of(
     object().shape({
       Locale: string().required('LOCALE_IS_REQUIRED'),
       Name: string().required('NAME_IS_REQUIRED'),
       Strapline: number().required('STRAPLINE_IS_REQUIRED'),
-      Description: number().required('DESCRIPTION_IS_REQUIRED'),
+      Description: number().required('DESCRIPTION_IS_REQUIRED')
     })
   )
 });
 
 const partialData = {
-  "ID": "",
-  "Revision": {
-    "TypeID": "",
-    "ClassificationID": "",
-    "Certification": "",
-    "UVA": false,
-    "Fresh": false,
-    "Naked": false,
-    "Meltable": false,
-    "Ingredients": [],
-    "Sizes": []
+  'ID': '',
+  'Revision': {
+    'TypeID': '',
+    'ClassificationID': '',
+    'Certification': '',
+    'UVA': false,
+    'Fresh': false,
+    'Naked': false,
+    'Meltable': false,
+    'Ingredients': [],
+    'Sizes': []
   },
-  "Translations": [
+  'Translations': [
     {
-      "Locale": "en",
-      "Name": "",
-      "Strapline": "",
-      "Description": ""
+      'Locale': 'en',
+      'Name': '',
+      'Strapline': '',
+      'Description': ''
     }
   ]
 };
@@ -118,14 +117,14 @@ const partialSchema = object().shape({
     UVA: boolean(),
     Fresh: boolean(),
     Naked: boolean(),
-    Meltable: boolean(),
+    Meltable: boolean()
   }),
   Translations: array().of(
     object().shape({
       Locale: string(),
       Name: string().required('NAME_IS_REQUIRED'),
       Strapline: string(),
-      Description: string(),
+      Description: string()
     })
   )
 });
@@ -137,7 +136,7 @@ storiesOf('Form', module)
   // decorators
   .addParameters({
     options: { showAddonPanel: false },
-    // notes: { markdown: README },
+    notes: '<h1>hello</h1>',
     info: { header: false }
   })
 
@@ -150,10 +149,10 @@ storiesOf('Form', module)
         <Form.Form
           initialData={ partialData }
           schema={ partialSchema }
-          onSubmit={(data) => setFields(data)}
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Scope path='Translations'>
-            <Form.Scope path={0}>
+            <Form.Scope path={ 0 }>
               <div>
                 <Form.Input
                   label='Name'
@@ -161,9 +160,9 @@ storiesOf('Form', module)
                 />
               </div>
               <div>
-              <Form.Input
-                label='Strapline'
-                name='Strapline'
+                <Form.Input
+                  label='Strapline'
+                  name='Strapline'
                 />
               </div>
               <div>
@@ -181,9 +180,9 @@ storiesOf('Form', module)
                 />
               </div>
               <div>
-              <Form.Input
-                label='Strapline'
-                name='Strapline'
+                <Form.Input
+                  label='Strapline'
+                  name='Strapline'
                 />
               </div>
               <div>
@@ -195,11 +194,11 @@ storiesOf('Form', module)
             </Form.Scope>
           </Form.Scope>
           <hr />
-          <button type="submit">Save</button>
+          <button type='submit'>Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('dynamic schema', () => {
@@ -208,7 +207,7 @@ storiesOf('Form', module)
 
       return (
         <Form.Form
-          onSubmit={(data) => setFields(data)}
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Input
             label='First Name'
@@ -269,11 +268,11 @@ storiesOf('Form', module)
             </Form.Scope>
           </Form.Scope>
           <hr />
-          <button type="submit">Save</button>
+          <button type='submit'>Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('another test', () => {
@@ -284,10 +283,10 @@ storiesOf('Form', module)
         <Form.Form
           schema={ fancySchema }
           initialData={ fancyData }
-          onSubmit={(data) => setFields(data)}
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Scope path='Translations'>
-            <Form.Scope path={0}>
+            <Form.Scope path={ 0 }>
               <Form.Input
                 label='Name'
                 name='Name'
@@ -301,11 +300,11 @@ storiesOf('Form', module)
             />
           </Form.Scope>
           <hr />
-          <button type="submit">Save</button>
+          <button type='submit'>Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('key/value validation', () => {
@@ -315,8 +314,8 @@ storiesOf('Form', module)
       return (
         <Form.Form
           schema={ testSchema }
-          initialData={ testData}
-          onSubmit={(data) => setFields(data)}
+          initialData={ testData }
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Input
             label='ID'
@@ -334,11 +333,11 @@ storiesOf('Form', module)
             )) }
           </Form.Scope>
           <hr />
-          <button type="submit">Save</button>
+          <button type='submit'>Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('Default too', () => {
@@ -347,8 +346,8 @@ storiesOf('Form', module)
 
       return (
         <Form.Form
-          schema={schema}
-          onSubmit={(data) => setFields(data)}
+          schema={ schema }
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Input
             label='First Name'
@@ -368,12 +367,12 @@ storiesOf('Form', module)
           <Form.Scope path='details'>
             <Form.Select
               label='language'
-              name="language"
-              placeholder="Please select..."
-              options={[
-                { id: "en", title: "English" },
-                { id: "it", title: "Italian" }
-              ]}
+              name='language'
+              placeholder='Please select...'
+              options={ [
+                { id: 'en', title: 'English' },
+                { id: 'it', title: 'Italian' }
+              ] }
             />
           </Form.Scope>
           <hr />
@@ -395,11 +394,11 @@ storiesOf('Form', module)
             </Form.Scope>
           </Form.Scope>
           <hr />
-          <button type="submit">Save</button>
+          <button type='submit'>Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('No validation', () => {
@@ -408,7 +407,7 @@ storiesOf('Form', module)
 
       return (
         <Form.Form
-          onSubmit={(data) => setFields(data)}
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Input
             label='First Name'
@@ -428,12 +427,12 @@ storiesOf('Form', module)
           <Form.Scope path='details'>
             <Form.Select
               label='language'
-              name="language"
-              placeholder="Please select..."
-              options={[
-                { id: "en", title: "English" },
-                { id: "it", title: "Italian" }
-              ]}
+              name='language'
+              placeholder='Please select...'
+              options={ [
+                { id: 'en', title: 'English' },
+                { id: 'it', title: 'Italian' }
+              ] }
             />
           </Form.Scope>
           <hr />
@@ -455,11 +454,11 @@ storiesOf('Form', module)
             </Form.Scope>
           </Form.Scope>
           <hr />
-          <button type="submit">Save</button>
+          <button type='submit'>Save</button>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('Disabled submit', () => {
@@ -468,8 +467,8 @@ storiesOf('Form', module)
 
       return (
         <Form.Form
-          schema={schema}
-          onSubmit={(data) => setFields(data)}
+          schema={ schema }
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Input
             label='First Name'
@@ -489,12 +488,12 @@ storiesOf('Form', module)
           <Form.Scope path='details'>
             <Form.Select
               label='language'
-              name="language"
-              placeholder="Please select..."
-              options={[
-                { id: "en", title: "English" },
-                { id: "it", title: "Italian" }
-              ]}
+              name='language'
+              placeholder='Please select...'
+              options={ [
+                { id: 'en', title: 'English' },
+                { id: 'it', title: 'Italian' }
+              ] }
             />
           </Form.Scope>
           <hr />
@@ -517,16 +516,16 @@ storiesOf('Form', module)
           </Form.Scope>
           <hr />
           <Form.Context.Consumer>
-            {({errors}) => {
+            { ({ errors }) => {
               return (
-                <button disabled={ Object.keys(errors).length } type="submit">Save</button>
-              )
-            }}
+                <button disabled={ Object.keys(errors).length } type='submit'>Save</button>
+              );
+            } }
           </Form.Context.Consumer>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   })
   .add('Inline elements', () => {
@@ -535,8 +534,8 @@ storiesOf('Form', module)
 
       return (
         <Form.Form
-          schema={schema}
-          onSubmit={(data) => setFields(data)}
+          schema={ schema }
+          onSubmit={ (data) => setFields(data) }
         >
           <Form.Input
             isInline
@@ -559,12 +558,12 @@ storiesOf('Form', module)
             <Form.Select
               isInline
               label='Language'
-              name="language"
-              placeholder="Please select..."
-              options={[
-                { id: "en", title: "English" },
-                { id: "it", title: "Italian" }
-              ]}
+              name='language'
+              placeholder='Please select...'
+              options={ [
+                { id: 'en', title: 'English' },
+                { id: 'it', title: 'Italian' }
+              ] }
             />
           </Form.Scope>
           <hr />
@@ -589,15 +588,15 @@ storiesOf('Form', module)
           </Form.Scope>
           <hr />
           <Form.Context.Consumer>
-            {({errors}) => {
+            { ({ errors }) => {
               return (
-                <button disabled={ Object.keys(errors).length } type="submit">Save</button>
-              )
-            }}
+                <button disabled={ Object.keys(errors).length } type='submit'>Save</button>
+              );
+            } }
           </Form.Context.Consumer>
           <pre>{ JSON.stringify(fields, null, 2) }</pre>
         </Form.Form>
-      )
-    }
+      );
+    };
     return <FormWrapper />;
   });
