@@ -208,6 +208,7 @@ Form.propTypes = {
   children: PropTypes.any.isRequired,
   /** Function which returns the data object and a resetForm function */
   onSubmit: PropTypes.func.isRequired,
+  /** Debounces the handleFieldValidation function */
   fieldDebounced: PropTypes.number
 };
 
