@@ -1,6 +1,6 @@
 {
   "name": "bambino-form",
-  "version": "0.0.0-beta.12",
+  "version": "0.0.0-beta.13",
   "description": "La mia piccola forma di bambino",
   "private": false,
   "license": "MIT",
@@ -25,7 +25,7 @@
     "test:watch": "yarn jest src --watch --notify",
     "test:cover": "jest src --coverage",
     "build": "yarn docz:build && yarn storybook:build",
-    "build:full": "yarn clean && yarn lint && yarn test && yarn compile && docz:build && storybook:build",
+    "build:full": "yarn clean && yarn lint && yarn test && yarn compile && storybook:build",
     "lint": "eslint src",
     "clean": "rimraf lib",
     "compile": "rm -rf dist/ && babel --copy-files src --out-dir dist",

@@ -1,5 +1,5 @@
 import dot from 'dot-object';
-import { useContext, useEffect } from 'react';
+import React from 'react';
 
 // context
 import FormContext from '../Context';
@@ -14,11 +14,12 @@ export default function useField(name) {
     registerField,
     handleSubmit,
     handleFieldValidation
-  } = useContext(FormContext);
+  } = React.useContext(FormContext);
 
-  const fieldName = scopePath ? `${ scopePath }.${ name }` : name;
+  const nameRef = React.useRef(name);
+  const fieldName = scopePath ? `${ scopePath }.${ nameRef }` : name;
 
-  useEffect(() => () => unregisterField(fieldName), [fieldName]);
+  React.useEffect(() => () => unregisterField(fieldName), [fieldName, nameRef]);
 
   const defaultValue = dot.pick(fieldName, initialValues);
   const error = errors[fieldName];

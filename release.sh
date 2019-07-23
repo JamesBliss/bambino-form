@@ -12,7 +12,7 @@ if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
 
   echo "==== starting bundle ===="
 
-  npm run build
+  npm run build:full
 
   echo "==== ending bundle ===="
   echo "********"

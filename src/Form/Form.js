@@ -144,6 +144,7 @@ const Form = ({
       if (typeof callback === 'function') {
         callback(finalDataSet);
       }
+      return { errors: {}, data: finalDataSet };
     } catch (err) {
       const validationErrors = {};
 
@@ -156,13 +157,16 @@ const Form = ({
       });
 
       setErrors(validationErrors);
+      return { errors: validationErrors, data: finalDataSet };
     }
   }
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
-    handleValidation((data) => onSubmit(data, { resetForm }));
+    return handleValidation();
   }
 
   function registerField(field) {
