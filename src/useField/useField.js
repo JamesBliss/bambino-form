@@ -16,10 +16,9 @@ export default function useField(name) {
     handleFieldValidation
   } = React.useContext(FormContext);
 
-  const nameRef = React.useRef(name);
-  const fieldName = scopePath ? `${ scopePath }.${ nameRef }` : name;
+  const fieldName = scopePath ? `${ scopePath }.${ name }` : name;
 
-  React.useEffect(() => () => unregisterField(fieldName), [fieldName, nameRef]);
+  React.useEffect(() => () => unregisterField(fieldName), [fieldName, name]);
 
   const defaultValue = dot.pick(fieldName, initialValues);
   const error = errors[fieldName];

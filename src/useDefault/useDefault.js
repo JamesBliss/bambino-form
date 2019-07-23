@@ -26,6 +26,7 @@ const useDefault = ({ name, ref, schema, value, path = 'value' }) => {
 
   const props = {
     ref,
+    fieldName,
     id: fieldName,
     name: fieldName,
     'aria-label': fieldName,
