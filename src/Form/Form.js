@@ -142,9 +142,9 @@ const Form = ({
       setErrors({});
 
       if (typeof callback === 'function') {
-        callback(finalDataSet);
+        callback(finalDataSet, resetForm);
       }
-      return { errors: {}, data: finalDataSet };
+      return { errors: {}, data: finalDataSet, resetForm };
     } catch (err) {
       const validationErrors = {};
 
@@ -157,7 +157,7 @@ const Form = ({
       });
 
       setErrors(validationErrors);
-      return { errors: validationErrors, data: finalDataSet };
+      return { errors: validationErrors, data: finalDataSet, resetForm };
     }
   }
 
@@ -186,6 +186,7 @@ const Form = ({
         registerField,
         unregisterField,
         handleFieldValidation,
+        handleResetForm: resetForm,
         handleSubmit
       } }
     >
