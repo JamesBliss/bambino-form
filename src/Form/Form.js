@@ -142,7 +142,7 @@ const Form = ({
       setErrors({});
 
       if (typeof onSubmit === 'function') {
-        onSubmit({ finalDataSet, resetForm });
+        onSubmit(finalDataSet, { resetForm });
       }
       return { errors: {}, data: finalDataSet, resetForm };
     } catch (err) {
