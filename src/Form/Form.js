@@ -110,7 +110,7 @@ const Form = ({
     fieldDebounced
   );
 
-  async function handleValidation(callback = null) {
+  async function handleValidation() {
     const { data, dymanicSchema } = parseForm();
     let castData = data;
     let finalDataSet = {};
@@ -141,8 +141,8 @@ const Form = ({
 
       setErrors({});
 
-      if (typeof callback === 'function') {
-        callback(finalDataSet, resetForm);
+      if (typeof onSubmit === 'function') {
+        onSubmit({ finalDataSet, resetForm });
       }
       return { errors: {}, data: finalDataSet, resetForm };
     } catch (err) {
