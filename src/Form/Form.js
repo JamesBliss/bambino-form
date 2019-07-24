@@ -42,9 +42,10 @@ const Form = ({
 }) => {
   const [fields, setFields] = React.useState([]);
   const [errors, setErrors] = React.useState({});
+  const initialData = JSON.parse(JSON.stringify(initialValues));
 
   function parseForm() {
-    const data = Object.assign({}, initialValues);
+    const data = initialData;
     const parsedDymanicSchema = {};
 
     fields.forEach(({ name, ref, path, parseValue, dymanicSchema }) => {
@@ -129,7 +130,7 @@ const Form = ({
           context: {}
         });
 
-        finalDataSet = merge(initialValues, castData, {
+        finalDataSet = merge(initialData, castData, {
           arrayMerge: (destinationArray, sourceArray) => {
             return sourceArray.map((mapArray, index) => ({
               ...destinationArray[index],
