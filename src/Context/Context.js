@@ -6,6 +6,7 @@ export default createContext({
   scopePath: '',
   registerField: () => {},
   unregisterField: () => {},
+  getFields: () => {},
   handleSubmit: () => {},
   handleFieldValidation: () => {}
 });

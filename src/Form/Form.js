@@ -196,6 +196,7 @@ const Form = ({
         scopePath: '',
         registerField,
         unregisterField,
+        getFields: parseForm,
         handleFieldValidation,
         handleResetForm: resetForm,
         handleSubmit
