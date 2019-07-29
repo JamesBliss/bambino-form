@@ -1,0 +1,85 @@
+---
+name: Scope
+route: /scope
+---
+
+import { Playground, Props } from 'docz'
+import { object, string } from 'yup';
+import Form from '../../src/Form/Form'
+import Context from '../../src/Context/Context'
+import Scope from '../../src/Scope/Scope'
+import Input from '../../src/Input/Input'
+
+# Scope
+
+The `<Scope />` component is a magical component which allows you to nest fields!
+
+## Props
+
+<Props of={ Scope } />
+
+## Basic usage
+
+<Playground>
+  <Form onSubmit={ data => alert(JSON.stringify(data, null, 2)) }>
+    <Input
+      name='name'
+      placeholder='Name'
+    />
+    <br />
+    <Scope path='child'>
+      <Input
+        name='child_field'
+        placeholder='Child field'
+      />
+    </Scope>
+    <br />
+    {/* This is required because docz doesn't support form submission 🤦‍ */}
+    <Context.Consumer>
+      { ({ handleSubmit }) => (
+        <button onClick={ (e) => handleSubmit(e) }>Submit name </button>
+      )}
+    </Context.Consumer>
+  </Form>
+</Playground>
+
+## Usage with arrays!
+
+<Playground>
+  <Form onSubmit={ data => alert(JSON.stringify(data, null, 2)) }>
+    <Input
+      name='name'
+      placeholder='Name'
+    />
+    <br />
+    <Scope path='child'>
+      <Input
+        name='child_field'
+        placeholder='Child field'
+      />
+      <Scope path='child_array'>
+        <Scope path={ 0 }>
+          <br />
+          <Input
+            name='child_array_field'
+            placeholder='Child array field'
+          />
+        </Scope>
+        <Scope path={ 1 }>
+          <br />
+          <Input
+            name='child_array_field'
+            placeholder='Child array field'
+          />
+        </Scope>
+      </Scope>
+    </Scope>
+    <br />
+    {/* This is required because docz doesn't support form submission 🤦‍ */}
+    <Context.Consumer>
+      { ({ handleSubmit }) => (
+        <button onClick={ (e) => handleSubmit(e) }>Submit name </button>
+      )}
+    </Context.Consumer>
+  </Form>
+</Playground>

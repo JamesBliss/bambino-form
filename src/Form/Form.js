@@ -6,6 +6,7 @@ import merge from 'deepmerge';
 import { useDebouncedCallback } from 'use-debounce';
 
 // context
+import { throwError } from 'rxjs';
 import FormContext from '../Context';
 
 // helper
@@ -13,6 +14,7 @@ const looptheloop = obj => {
   const shape = {};
 
   Object.keys(obj).forEach(key => {
+    if (obj[key] === undefined) return;
     const keyType = obj[key].constructor.name;
 
     if (keyType === 'Object') {
@@ -42,10 +44,14 @@ const Form = ({
 }) => {
   const [fields, setFields] = React.useState([]);
   const [errors, setErrors] = React.useState({});
-  const initialData = JSON.parse(JSON.stringify(initialValues));
+  const [initialData, setInitialData] = React.useState({});
+
+  React.useEffect(() => {
+    setInitialData(JSON.parse(JSON.stringify(initialValues)));
+  }, []);
 
   function parseForm() {
-    const data = initialData;
+    const data = JSON.parse(JSON.stringify(initialValues));
     const parsedDymanicSchema = {};
 
     fields.forEach(({ name, ref, path, parseValue, dymanicSchema }) => {
@@ -132,10 +138,15 @@ const Form = ({
 
         finalDataSet = merge(initialData, castData, {
           arrayMerge: (destinationArray, sourceArray) => {
-            return sourceArray.map((mapArray, index) => ({
-              ...destinationArray[index],
-              ...mapArray
-            }));
+            return sourceArray.map((mapArray, index) => {
+              if (typeof mapArray === 'string') {
+                return destinationArray.push(mapArray);
+              }
+              return ({
+                ...destinationArray[index],
+                ...mapArray
+              });
+            });
           }
         });
       }
@@ -202,7 +213,7 @@ const Form = ({
 Form.defaultProps = {
   initialValues: {},
   schema: null,
-  fieldDebounced: 100
+  fieldDebounced: 10
 };
 
 Form.propTypes = {

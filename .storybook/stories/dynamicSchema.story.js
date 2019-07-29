@@ -1,9 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { object, array, string } from 'yup';
+import { string } from 'yup';
+import { withInfo } from '@storybook/addon-info';
+import marked from 'marked';
 
 // components //
-import * as Form from '../../src';
+import Form from '../../src/Form';
+import Scope from '../../src/Scope';
+import Input from '../../src/Input';
+import Context from '../../src/Context';
+import Select from '../../src/Select';
+import Check from '../../src/Check';
 
 // helper
 import FormWrapper from './_helper';
@@ -11,25 +18,32 @@ import FormWrapper from './_helper';
 // readme
 import markdown from '../../README.md'
 
-// schema
-const schema = object().shape({
-  first_name: string().required('First name is required'),
-  last_name: string(),
-  details: object().shape({ language: string().required('Language is required') }),
-  translations: array().of(object().shape({
-    id: string().required('Translation ID is required'),
-    label: string()
-  }))
-});
+const info = `
+~~~js
+<Input
+  label='First Name'
+  name='first_name'
+  schema={ string().required('First name is required') }
+/>
+~~~
+`;
 
 // story //
 storiesOf('Form', module)
 
   // decorators
+  .addDecorator(withInfo)
   .addParameters({
     options: { showAddonPanel: false },
     notes: { markdown },
-    info: { header: false }
+    info: {
+      text: marked(info),
+      inline: true,
+      header: false,
+      source: false,
+      propTables: [Form, Scope, Input, Select, Check ],
+      propTablesExclude: [FormWrapper]
+    }
   })
 
   // story
@@ -37,89 +51,80 @@ storiesOf('Form', module)
     return (
       <FormWrapper>
         {({setFields}) => (
-          <Form.Form
+          <Form
             onSubmit={ (data) => setFields(data) }
           >
-            <h1>Each field has it's own inline schema</h1>
-            <pre>{`
-<Input
-  label='First Name'
-  name='first_name'
-  schema={ string().required('First name is required') }
-/>
-            `}</pre>
-            <br />
             <hr />
-            <Form.Input
+            <Input
               label='First Name'
               name='first_name'
               schema={ string().required('First name is required') }
             />
             <br />
-            <Form.Input
+            <Input
               label='Last Name'
               name='last_name'
               schema={ string().required('Last name is required') }
             />
             <hr />
-            <Form.Scope path='languages'>
-              <Form.Input
+            <Scope path='languages'>
+              <Input
                 label='Language spoken'
                 name='language_spoken'
                 schema={ string().required('language spoken is required') }
               />
               <br />
-              <Form.Input
+              <Input
                 label='Language not spoken'
                 name='language_not_spoken'
                 schema={ string().required('language not spoken is required') }
               />
               <br />
-              <Form.Scope path='languages_to_learn'>
-                <Form.Input
+              <Scope path='languages_to_learn'>
+                <Input
                   label='Language language list'
                   name='language_list'
                   schema={ string().required('Language list is required') }
                 />
-              </Form.Scope>
-            </Form.Scope>
+              </Scope>
+            </Scope>
             <hr />
-            <Form.Scope path='skills'>
-              <Form.Scope path={ 0 }>
-                <Form.Input
+            <Scope path='skills'>
+              <Scope path={ 0 }>
+                <Input
                   label='Skill'
                   name='skill'
                   schema={ string().required('skill is required') }
                 />
                 <br />
-                <Form.Scope path='thing'>
-                  <Form.Input
+                <Scope path='thing'>
+                  <Input
                     label='name'
                     name='name'
                     schema={ string().required('skill name is required') }
                   />
-                </Form.Scope>
-              </Form.Scope>
+                </Scope>
+              </Scope>
               <hr />
-              <Form.Scope path={ 1 }>
-                <Form.Input
+              <Scope path={ 1 }>
+                <Input
                   label='Skill'
                   name='skill'
                   schema={ string().required('skill is required') }
                 />
                 <br />
-                <Form.Scope path='thing'>
-                  <Form.Input
+                <Scope path='thing'>
+                  <Input
                     label='name'
                     name='name'
                     schema={ string().required('skill name is required') }
                   />
-                </Form.Scope>
-              </Form.Scope>
-            </Form.Scope>
+                </Scope>
+              </Scope>
+            </Scope>
             <hr />
             <button type='submit'>Save</button>
-          </Form.Form>
+          </Form>
         ) }
       </FormWrapper>
     );

@@ -22,7 +22,7 @@ The `<Form />` component is the most important element of the puzzle, it control
 ## Basic usage
 
 <Playground>
-  <Form onSubmit={ data => alert(JSON.stringify(data)) }>
+  <Form onSubmit={ data => alert(JSON.stringify(data, null, 2)) }>
     <Input
       name='name'
       placeholder='Enter name'
@@ -74,7 +74,7 @@ The `<Form />` component is the most important element of the puzzle, it control
       first_name: string().required('First name is required'),
       last_name: string()
     }) }
-    onSubmit={ data => alert(JSON.stringify(data)) }
+    onSubmit={ data => alert(JSON.stringify(data, null, 2)) }
   >
     <Input
       name='first_name'

@@ -33,38 +33,45 @@ const InputField = ({
     ...rest,
     ...bag,
     defaultValue,
-    fieldName,
     ref
   };
 
   return (
     <>
-      { label && <label htmlFor={ fieldName }>{ label }</label> }
+      { label && <label className='form__label' htmlFor={ fieldName }>{ label }</label> }
 
       { multiline ? (
-        <textarea { ...props } />
+        <textarea className='form__textarea' { ...props } />
       ) : (
-        <input { ...props } />
+        <input className='form__input' { ...props } />
       ) }
 
-      { error && <span>{ error }</span> }
+      { error && <span className='form__error'>{ error }</span> }
     </>
   );
 };
 
 InputField.defaultProps = {
   label: null,
+  placeholder: '',
   multiline: false,
   schema: null,
   value: null
 };
 
 InputField.propTypes = {
+  /** Name and ID for the field. This will define what this is called in the output */
   name: PropTypes.string.isRequired,
+  /** Label to show next to the checkbox */
   label: PropTypes.string,
+  /** placeholder text */
+  placeholder: PropTypes.string,
+  /** <textarea /> or <input /> */
   multiline: PropTypes.bool,
+  /** Field level schema, will be overriden if a schema is passed into the <Form /> */
   schema: PropTypes.any,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  /** Initial value to populate the check state */
+  value: PropTypes.PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default InputField;

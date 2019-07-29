@@ -1,6 +1,6 @@
 {
   "name": "bambino-form",
-  "version": "0.0.0-beta.18",
+  "version": "0.0.0-beta.19",
   "description": "La mia piccola forma di bambino",
   "private": false,
   "license": "MIT",
@@ -73,12 +73,13 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.2",
     "jest": "^24.8.0",
+    "marked": "^0.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "dependencies": {
     "deepmerge": "^4.0.0",
-    "dot-object": "^1.8.1",
+    "dot-object": "^1.9.0",
     "use-debounce": "^2.2.0",
     "yup": "^0.27.0"
   }

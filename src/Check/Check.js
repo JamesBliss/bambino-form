@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useDefault from '../useDefault';
 
 // exported component
-const InputField = ({
+const CheckField = ({
   name,
   label,
   schema,
@@ -34,32 +34,35 @@ const InputField = ({
     ...bag,
     type: 'checkbox',
     defaultValue,
-    fieldName,
     ref
   };
 
   return (
     <>
-      <input id={ fieldName } { ...props } />
+      <input className='form__input' { ...props } />
 
-      { label && <label htmlFor={ fieldName }>{ label }</label> }
+      { label && <label className='form__label' htmlFor={ fieldName }>{ label }</label> }
 
-      { error && <span>{ error }</span> }
+      { error && <span className='form__error'>{ error }</span> }
     </>
   );
 };
 
-InputField.defaultProps = {
+CheckField.defaultProps = {
   label: null,
   value: false,
   schema: null
 };
 
-InputField.propTypes = {
+CheckField.propTypes = {
+  /** Name and ID for the field. This will define what this is called in the output */
   name: PropTypes.string.isRequired,
+  /** Label to show next to the checkbox */
   label: PropTypes.string,
+  /** Field level schema, will be overriden if a schema is passed into the <Form /> */
   schema: PropTypes.any,
+  /** Initial value to populate the check state */
   value: PropTypes.bool
 };
 
-export default InputField;
+export default CheckField;

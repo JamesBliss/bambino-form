@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { object, lazy, string } from 'yup';
-import mapValues from 'lodash/mapValues';
+import { object, string, array } from 'yup';
 import { withInfo } from '@storybook/addon-info';
 import marked from 'marked';
 
@@ -21,25 +20,21 @@ import markdown from '../../README.md'
 
 // schema
 const schema = object().shape({
-  id: string().required('required'),
-  translations: lazy(obj => object(mapValues(obj, () => string().required('This is required'))))
+  test: array().of(string()),
+  testTwo: array().of(object().shape({
+    value: string()
+  }))
 });
 
-const initialValues = {
-  id: '5',
-  translations: {
-    'en': 'hello',
-    'fr': ''
-  }
-};
-
 const info = `
-Below is the yup schema used.
+Showing generic form using components. Below is the yup schema used.
 
 ~~~js
 const schema = object().shape({
-  ID: string().required('required'),
-  translations: lazy(obj => object(mapValues(obj, () => string().required('This is required'))))
+  test: array().of(string()),
+  testTwo: array().of(object().shape({
+    value: string()
+  }))
 });
 ~~~
 `;
@@ -63,34 +58,46 @@ storiesOf('Form', module)
   })
 
   // story
-  .add('Form: Key value pair', () => {
+  .add('Form: Array of strings', () => {
     return (
       <FormWrapper>
         {({setFields}) => (
           <Form
             schema={ schema }
-            initialValues={ initialValues }
             onSubmit={ (data) => setFields(data) }
           >
             <hr />
-            <Input
-              label='user id'
-              name='id'
-            />
-            <br />
-            <Scope path='translations'>
-              { Object.keys(initialValues.translations).map((key, index) => (
-                <React.Fragment>
-                  <Input
-                    label={`${key} - locale`}
-                    name={ key }
-                  />
-                  <br />
-                </React.Fragment>
-              )) }
+            <Scope path='test'>
+              <Input
+                label='one'
+                name={ 0 }
+              />
+              <Input
+                label='two'
+                name={ 1 }
+              />
             </Scope>
-            <hr />
+            <br />
+            <br />
+            <Scope path='testTwo'>
+              <Scope path={0}>
+                <Input
+                  label='one'
+                  name='value'
+                />
+              </Scope>
+              <Scope path={1}>
+                <Input
+                  label='two'
+                  name='value'
+                />
+              </Scope>
+            </Scope>
+            <br />
+            <br />
             <button type='submit'>Save</button>
+            <br />
+            <br />
           </Form>
         ) }
       </FormWrapper>

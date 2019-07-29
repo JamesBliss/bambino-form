@@ -1,9 +1,16 @@
 import React from 'react';
+import { withInfo } from '@storybook/addon-info';
+import marked from 'marked';
 import { storiesOf } from '@storybook/react';
 import { object, array, string } from 'yup';
 
 // components //
-import * as Form from '../../src';
+import Form from '../../src/Form';
+import Scope from '../../src/Scope';
+import Input from '../../src/Input';
+import Context from '../../src/Context';
+import Select from '../../src/Select';
+import Check from '../../src/Check';
 
 // helper
 import FormWrapper from './_helper';
@@ -22,27 +29,10 @@ const schema = object().shape({
   }))
 });
 
-// story //
-storiesOf('Form', module)
+const info = `
+Below is the yup schema used.
 
-  // decorators
-  .addParameters({
-    options: { showAddonPanel: false },
-    notes: { markdown },
-    info: { header: false }
-  })
-
-  // story
-  .add('Form: Array of objects', () => {
-    return (
-      <FormWrapper>
-        {({setFields, count, setCount}) => (
-          <Form.Form
-            schema={ schema }
-            onSubmit={ (data) => setFields(data) }
-          >
-            <h1>Translations are an array of objects using scope with an id to map them.</h1>
-            <pre>{`
+~~~js
 const schema = object().shape({
   first_name: string().required('First name is required'),
   last_name: string(),
@@ -52,23 +42,52 @@ const schema = object().shape({
     label: string()
   }))
 });
-            `}</pre>
+~~~
+`;
+
+// story //
+storiesOf('Form', module)
+
+  // decorators
+  .addDecorator(withInfo)
+  .addParameters({
+    options: { showAddonPanel: false },
+    notes: { markdown },
+    info: {
+      text: marked(info),
+      inline: true,
+      header: false,
+      source: false,
+      propTables: [Form, Scope, Input, Select, Check ],
+      propTablesExclude: [FormWrapper]
+    }
+  })
+
+  // story
+  .add('Form: Array of objects', () => {
+    return (
+      <FormWrapper>
+        {({setFields, count, setCount}) => (
+          <Form
+            schema={ schema }
+            onSubmit={ (data) => setFields(data) }
+          >
             <br />
             <hr />
-            <Form.Input
+            <Input
               label='First Name'
               placeholder='Enter first name'
               name='first_name'
             />
             <hr />
-            <Form.Input
+            <Input
               label='Last Name'
               placeholder='Enter last name'
               name='last_name'
             />
             <hr />
-            <Form.Scope path='details'>
-              <Form.Select
+            <Scope path='details'>
+              <Select
                 label='Language'
                 name='language'
                 placeholder='Please select...'
@@ -77,32 +96,32 @@ const schema = object().shape({
                   { id: 'it', title: 'Italian' }
                 ] }
               />
-            </Form.Scope>
+            </Scope>
             <hr />
-            <Form.Scope path='translations'>
+            <Scope path='translations'>
               {[...Array(count).keys()].map(point => (
                 <React.Fragment key={point}>
-                  <Form.Scope path={ point }>
-                    <Form.Input
+                  <Scope path={ point }>
+                    <Input
                       label='Translation ID'
                       placeholder='Enter translataion ID'
                       name='id'
                     />
                     <br />
-                    <Form.Input
+                    <Input
                       label='Translation Label'
                       placeholder='Enter translataion label'
                       name='label'
                     />
-                  </Form.Scope>
+                  </Scope>
                   <hr />
                 </React.Fragment>
               ))}
-            </Form.Scope>
+            </Scope>
             <button onClick={(e) => { e.preventDefault(); setCount(count + 1) }}>Add another translation</button>
             <hr />
             <button type='submit'>Save</button>
-          </Form.Form>
+          </Form>
         ) }
       </FormWrapper>
     );

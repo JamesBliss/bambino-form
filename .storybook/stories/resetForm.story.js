@@ -1,14 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { object, string } from 'yup';
+import { object, bool, string } from 'yup';
 import { withInfo } from '@storybook/addon-info';
 import marked from 'marked';
 
 // components //
 import Form from '../../src/Form';
 import Scope from '../../src/Scope';
-import Context from '../../src/Context';
 import Input from '../../src/Input';
+import Context from '../../src/Context';
 import Select from '../../src/Select';
 import Check from '../../src/Check';
 
@@ -20,21 +20,18 @@ import markdown from '../../README.md'
 
 // schema
 const schema = object().shape({
-  first_name: string().required('First name is required'),
-  last_name: string()
+  name: string().required('Name is required'),
+  language: string().required('Language is required'),
+  alive: bool().oneOf([true], 'Field must be checked')
 });
 
 const info = `
-Below is the yup schema used.
 
 ~~~js
-<Context.Consumer>
-  { ({ errors }) => {
-    return (
-      <button disabled={ Object.keys(errors).length } type='submit'>Save</button>
-    );
-  } }
-</Context.Consumer>
+<Form
+  schema={ schema }
+  onSubmit={(data, { resetForm }) => { setFields(data); resetForm(); } }
+>
 ~~~
 `;
 
@@ -57,34 +54,37 @@ storiesOf('Form', module)
   })
 
   // story
-  .add('Form: Disabled submit', () => {
+  .add('Form: Reset form', () => {
     return (
       <FormWrapper>
         {({setFields}) => (
           <Form
             schema={ schema }
-            onSubmit={ (data) => setFields(data) }
+            onSubmit={(data, { resetForm }) => { setFields(data); resetForm(); } }
           >
             <hr />
             <Input
-              label='First Name'
-              placeholder='Enter first name'
-              name='first_name'
+              label='Name'
+              placeholder='Enter name'
+              name='name'
+            />
+            <br />
+            <Select
+              label='Language'
+              name='language'
+              placeholder='Please select...'
+              options={ [
+                { id: 'en', title: 'English' },
+                { id: 'it', title: 'Italian' }
+              ] }
+            />
+            <br />
+            <Check
+              label='Alive?'
+              name='alive'
             />
             <hr />
-            <Input
-              label='Last Name'
-              placeholder='Enter last name'
-              name='last_name'
-            />
-            <hr />
-            <Context.Consumer>
-              { ({ errors }) => {
-                return (
-                  <button disabled={ Object.keys(errors).length } type='submit'>Save</button>
-                );
-              } }
-            </Context.Consumer>
+            <button type='submit'>Save</button>
           </Form>
         ) }
       </FormWrapper>

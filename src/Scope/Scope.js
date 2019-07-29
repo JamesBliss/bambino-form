@@ -27,10 +27,12 @@ const Scope = ({ path, children }) => {
 };
 
 Scope.propTypes = {
+  /** New path of child elements to sit in. Number = ID in an arrya. String = key in object */
   path: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string
   ]).isRequired,
+  /** Inner components */
   children: PropTypes.any.isRequired
 };
 

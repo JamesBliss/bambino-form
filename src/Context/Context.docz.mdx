@@ -16,21 +16,23 @@ The `<Context />` offers access to various props without going through other hoo
 ## Basic usage
 
 <Playground>
-  <Form onSubmit={ _ => _ }>
-    <Input
-      name='name'
-      schema={ string().required('Name is required') }
-      placeholder='Enter name'
-    />
-    <Context.Consumer>
-      { (props) => {
-        /* hack so you can see functions 🙈 */
-        Function.prototype.toJSON = function() { return this.toString(); }
-        /* rending everything out of the context! */
-        return <pre>{ JSON.stringify(props, null, 2)}</pre>
-       } }
-    </Context.Consumer>
-  </Form>
+  { () => (
+    <Form onSubmit={ _ => _ }>
+      <Input
+        name='name'
+        schema={ string().required('Name is required') }
+        placeholder='Enter name'
+      />
+      <Context.Consumer>
+        { (props) => {
+          /* hack so you can see functions 🙈 */
+          Function.prototype.toJSON = function() { return this.toString(); }
+          /* rending everything out of the context! */
+          return <pre>{ JSON.stringify(props, null, 2)}</pre>
+        } }
+      </Context.Consumer>
+    </Form>
+  )}
 </Playground>
 
 ## Disable Submit
@@ -40,23 +42,25 @@ With this contextual power you can do things like disabling the submit if there 
 I'll leave you to come up with me 😅
 
 <Playground>
-  <Form onSubmit={ data => alert(JSON.stringify(data, null, 2)) }>
-    <Input
-      name='name'
-      schema={ string().required('Name is required') }
-      placeholder='Enter name'
-    />
-    <br />
-    {/* This is required because docz doesn't support form submission 🤦‍ */}
-    <Context.Consumer>
-      { ({ handleSubmit, errors }) => (
-        <button
-          disabled={ Object.keys(errors).length }
-          onClick={ (e) => handleSubmit(e) }
-        >
-          Submit full name
-        </button>
-      )}
-    </Context.Consumer>
-  </Form>
+  { () => (
+    <Form onSubmit={ data => alert(JSON.stringify(data, null, 2)) }>
+      <Input
+        name='name'
+        schema={ string().required('Name is required') }
+        placeholder='Enter name'
+      />
+      <br />
+      {/* This is required because docz doesn't support form submission 🤦‍ */}
+      <Context.Consumer>
+        { ({ handleSubmit, errors }) => (
+          <button
+            disabled={ Object.keys(errors).length }
+            onClick={ (e) => handleSubmit(e) }
+          >
+            Submit full name
+          </button>
+        )}
+      </Context.Consumer>
+    </Form>
+  )}
 </Playground>

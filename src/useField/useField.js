@@ -16,7 +16,16 @@ export default function useField(name) {
     handleFieldValidation
   } = React.useContext(FormContext);
 
-  const fieldName = scopePath ? `${ scopePath }.${ name }` : name;
+  let fieldName;
+  if (scopePath) {
+    if (typeof name === 'number') {
+      fieldName = `${ scopePath }[${ name }]`;
+    } else {
+      fieldName = `${ scopePath }.${ name }`;
+    }
+  } else {
+    fieldName = `${ name }`;
+  }
 
   React.useEffect(() => () => unregisterField(fieldName), [fieldName, name]);
 

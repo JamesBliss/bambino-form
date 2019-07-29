@@ -21,34 +21,18 @@ This exported component is not expected to be your solution within a project but
 <Playground>
   <Form onSubmit={ _ => _}>
     <Check
-      name='first_name'
-      placeholder='Enter First Name'
-      label='First name'
-    />
-  </Form>
-</Playground>
-
-## Multiline usage
-
-<Playground>
-  <Form onSubmit={ _ => _}>
-    <Check
-      label='Description'
-      name='description'
-      placeholder='Enter Description'
-      multiline
+      name='have_hands'
+      label='Do you have hands?'
     />
   </Form>
 </Playground>
 
 ## Inline schema usage
-
 <Playground>
   <Form onSubmit={ _ => _}>
     <Check
-      label='Last Name'
-      name='last_name'
-      placeholder='Enter Last Name'
+      name='have_hands'
+      label='Do you have hands?'
       schema={ bool().oneOf([true], 'Field must be checked') }
     />
   </Form>

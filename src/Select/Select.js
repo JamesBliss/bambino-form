@@ -34,15 +34,14 @@ function SelectField({
     ...rest,
     ...bag,
     defaultValue,
-    fieldName,
     ref
   };
 
   return (
     <>
-      { label && <label htmlFor={ fieldName }> { label } </label> }
+      { label && <label className='form__label' htmlFor={ fieldName }> { label } </label> }
 
-      <select { ...props }>
+      <select className='form__select' { ...props }>
         <option value={ defaultValue } disabled>
           { placeholder }
         </option>
@@ -53,7 +52,7 @@ function SelectField({
         )) }
       </select>
 
-      { error && <span>{ error }</span> }
+      { error && <span className='form__error'>{ error }</span> }
     </>
   );
 }
@@ -68,12 +67,21 @@ SelectField.defaultProps = {
 };
 
 SelectField.propTypes = {
+  /** Name and ID for the field. This will define what this is called in the output */
   name: PropTypes.string.isRequired,
-  schema: PropTypes.any,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
+  /** Label to show next to the checkbox */
   label: PropTypes.string,
-  options: PropTypes.array
+  /** placeholder text for the first item in the dropdown */
+  placeholder: PropTypes.string,
+  /** Field level schema, will be overriden if a schema is passed into the <Form /> */
+  schema: PropTypes.any,
+  /** Initial value to populate the check state */
+  value: PropTypes.string,
+  /** Array options. Expected shape of [{ id: '', title: ''}] */
+  options: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string
+  }))
 };
 
 export default SelectField;
