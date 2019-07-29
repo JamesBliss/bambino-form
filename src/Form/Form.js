@@ -6,7 +6,6 @@ import merge from 'deepmerge';
 import { useDebouncedCallback } from 'use-debounce';
 
 // context
-import { throwError } from 'rxjs';
 import FormContext from '../Context';
 
 // helper

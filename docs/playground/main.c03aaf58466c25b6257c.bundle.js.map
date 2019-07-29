@@ -1,1 +1,0 @@
-{"version":3,"file":"main.c03aaf58466c25b6257c.bundle.js","sources":["webpack:///./src/Context/index.js"],"sourcesContent":["import Context from './Context';\n\nexport default Context;"],"mappings":"AAEA","sourceRoot":""}
