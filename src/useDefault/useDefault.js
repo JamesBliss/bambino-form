@@ -4,7 +4,7 @@ import React from 'react';
 import useField from '../useField';
 
 // exported component
-const useDefault = ({ name, ref, schema, value, path = 'value' }) => {
+const useDefault = ({ name, ref, schema, value, parseValue = null, path = 'value' }) => {
   const {
     fieldName,
     handleFieldValidation,
@@ -19,6 +19,7 @@ const useDefault = ({ name, ref, schema, value, path = 'value' }) => {
         name: fieldName,
         ref: ref.current,
         path,
+        parseValue,
         dymanicSchema: schema
       });
     }

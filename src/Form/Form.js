@@ -62,7 +62,7 @@ const Form = ({
         parsedDymanicSchema[name] = mixed().notRequired();
       }
 
-      data[name] = parseValue ? parseValue(value) : value;
+      data[name] = typeof parseValue === 'function' ? parseValue(value) : value;
     });
 
     dot.object(parsedDymanicSchema);
