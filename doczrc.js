@@ -6,5 +6,5 @@
 
 module.exports = {
   dest: '/docs/documentation',
-  base: '/'
+  base: '/bambino-form/documentation/'
 };
