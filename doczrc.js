@@ -6,6 +6,5 @@
 
 module.exports = {
   dest: '/docs/documentation',
-  hashRouter: true,
-  base: '/documentation'
+  hashRouter: true
 };
