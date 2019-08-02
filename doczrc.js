@@ -6,5 +6,5 @@
 
 module.exports = {
   dest: '/docs/documentation',
-  hashRouter: true
+  base: '/bambino-form/documentation/'
 };
