@@ -1,10 +1,10 @@
 // export default {
-//   dest: '/docs/playground',
+//   dest: '/docs/documentation',
 //   hashRouter: true,
-//   base: '/playground'
+//   base: '/bambino-form/documentation/'
 // };
 
 module.exports = {
-  dest: '/docs/documentation',
+  dest: '/',
   base: '/bambino-form/documentation/'
 };
