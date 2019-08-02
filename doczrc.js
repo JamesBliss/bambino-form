@@ -5,7 +5,7 @@
 // };
 
 module.exports = {
-  dest: '/docs/playground',
+  dest: '/docs/documentation',
   hashRouter: true,
-  base: '/playground'
+  base: '/documentation'
 };
