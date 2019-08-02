@@ -20,7 +20,7 @@
     "storybook:build": "build-storybook -c .storybook -o docs/playground",
     "storybook:deploy": "storybook-to-ghpages",
     "docz:dev": "docz dev --port=7777",
-    "docz:build": "docz build --dest=docs/documentation",
+    "docz:build": "docz build",
     "test": "jest --passWithNoTests",
     "test:watch": "yarn jest src --watch --notify",
     "test:cover": "jest src --coverage",
