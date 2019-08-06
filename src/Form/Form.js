@@ -39,6 +39,7 @@ const Form = ({
   schema,
   onSubmit,
   fieldDebounced,
+  tagName,
   ...rest
 }) => {
   const [fields, setFields] = React.useState([]);
@@ -202,9 +203,11 @@ const Form = ({
         handleSubmit
       } }
     >
-      <form { ...rest } data-testid='form' onSubmit={ handleSubmit }>
-        { children }
-      </form>
+      { React.createElement(
+        tagName,
+        { ...rest, onSubmit: handleSubmit },
+        children
+      ) }
     </FormContext.Provider>
   );
 };
@@ -213,7 +216,8 @@ const Form = ({
 Form.defaultProps = {
   initialValues: {},
   schema: null,
-  fieldDebounced: 10
+  fieldDebounced: 10,
+  tagName: 'form'
 };
 
 Form.propTypes = {
@@ -226,7 +230,12 @@ Form.propTypes = {
   /** Function which returns the data object and a resetForm function */
   onSubmit: PropTypes.func.isRequired,
   /** Debounces the handleFieldValidation function */
-  fieldDebounced: PropTypes.number
+  fieldDebounced: PropTypes.number,
+  /** Element / tag the wrapper of the children that are rendered */
+  tagName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ])
 };
 
 export default Form;

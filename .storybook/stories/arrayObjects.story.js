@@ -118,7 +118,7 @@ storiesOf('Form', module)
                 </React.Fragment>
               ))}
             </Scope>
-            <button onClick={(e) => { e.preventDefault(); setCount(count + 1) }}>Add another translation</button>
+            <button type="button" onClick={(e) => { e.preventDefault(); setCount(count + 1) }}>Add another translation</button>
             <hr />
             <button type='submit'>Save</button>
           </Form>
