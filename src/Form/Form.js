@@ -40,7 +40,6 @@ const Form = ({
   onSubmit,
   fieldDebounced,
   tagName,
-  formRef,
   ...rest
 }) => {
   const [fields, setFields] = React.useState([]);

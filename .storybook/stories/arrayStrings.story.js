@@ -61,9 +61,8 @@ storiesOf('Form', module)
   .add('Form: Array of strings', () => {
     return (
       <FormWrapper>
-        {({setFields, formRef}) => (
+        {({setFields}) => (
           <Form
-            ref={ formRef }
             schema={ schema }
             onSubmit={ (data) => setFields(data) }
           >
