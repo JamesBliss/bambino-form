@@ -1,18 +1,50 @@
 import React from 'react';
+import dot from 'dot-object';
 
-// hool
-import useField from '../useField';
+// context
+import FormContext from '../Context';
 
 // exported component
-const useDefault = ({ name, ref, schema, value, parseValue = null, path = 'value' }) => {
+const useDefault = ({
+  name,
+  ref,
+  schema,
+  value,
+  parseValue = null,
+  path = 'value'
+}) => {
+  // pull values and functions from context
   const {
-    fieldName,
-    handleFieldValidation,
+    initialValues,
+    errors,
+    scopePath,
+    unregisterField,
     registerField,
-    defaultValue,
-    error
-  } = useField(name);
+    handleFieldValidation
+  } = React.useContext(FormContext);
 
+  // define field name based on number or string for path
+  let fieldName;
+  if (scopePath) {
+    if (typeof name === 'number') {
+      fieldName = `${ scopePath }[${ name }]`;
+    } else {
+      fieldName = `${ scopePath }.${ name }`;
+    }
+  } else {
+    fieldName = `${ name }`;
+  }
+
+  // on 'unmount' unregister field from <Form />
+  React.useEffect(() => () => unregisterField(fieldName), [fieldName, name]);
+
+  // find default intial value
+  const defaultValue = dot.pick(fieldName, initialValues);
+
+  // find any errors
+  const error = errors[fieldName];
+
+  // register field with <Form />
   React.useEffect(() => {
     if (ref.current) {
       registerField({
@@ -25,6 +57,7 @@ const useDefault = ({ name, ref, schema, value, parseValue = null, path = 'value
     }
   }, [ref.current, fieldName]);
 
+  // pull together props
   const props = {
     ref,
     fieldName,
@@ -37,6 +70,7 @@ const useDefault = ({ name, ref, schema, value, parseValue = null, path = 'value
     onBlur: ({ target }) => handleFieldValidation({ name: target.name, value: target[path] })
   };
 
+  // return props
   return props;
 };
 
