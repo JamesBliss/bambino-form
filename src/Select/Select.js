@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // hook
-import useDefault from '../useDefault';
+import useField from '../useField';
 
 // exported component
 function SelectField({
@@ -22,7 +22,7 @@ function SelectField({
     fieldName,
     defaultValue,
     ...bag
-  } = useDefault({
+  } = useField({
     name,
     ref,
     schema,

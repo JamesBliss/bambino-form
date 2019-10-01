@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // helper
-import useDefault from '../useDefault';
+import useField from '../useField';
 
 // exported component
 const InputField = ({
@@ -21,7 +21,7 @@ const InputField = ({
     fieldName,
     defaultValue,
     ...bag
-  } = useDefault({
+  } = useField({
     name,
     ref,
     schema,
@@ -61,7 +61,10 @@ InputField.defaultProps = {
 
 InputField.propTypes = {
   /** Name and ID for the field. This will define what this is called in the output */
-  name: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired,
   /** Label to show next to the checkbox */
   label: PropTypes.string,
   /** placeholder text */

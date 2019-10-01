@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // helper
-import useDefault from '../useDefault';
+import useField from '../useField';
 
 // exported component
 const CheckField = ({
@@ -20,7 +20,7 @@ const CheckField = ({
     fieldName,
     defaultValue,
     ...bag
-  } = useDefault({
+  } = useField({
     name,
     ref,
     schema,
