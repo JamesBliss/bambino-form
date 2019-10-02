@@ -8,5 +8,6 @@ export default createContext({
   unregisterField: () => {},
   getFields: () => {},
   handleSubmit: () => {},
+  handleValidation: () => {},
   handleFieldValidation: () => {}
 });
